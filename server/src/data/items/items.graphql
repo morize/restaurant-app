@@ -1,0 +1,17 @@
+type Query {
+  items: [Item]
+  itemsByPrice(min: Float!, max: Float!): [Item]
+  item(id: ID!): Item
+}
+
+type Mutation {
+  addNewItem(id: ID!, description: String!, price: Float!): Item
+}
+
+type Item {
+  id: ID!
+  description: String!
+  price: Float!
+  type: String!
+  range: String!
+}
