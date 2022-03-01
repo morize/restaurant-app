@@ -1,4 +1,4 @@
-module.exports[
+const orders = [
   {
     date: '2004-12-12',
     subTotal: 3.4,
@@ -13,5 +13,9 @@ module.exports[
         quantity: 2,
       },
     ],
-  }
+  },
 ];
+
+module.exports = {
+  orders,
+};
