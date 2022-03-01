@@ -8,23 +8,22 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 const typesArray = loadFilesSync(join(__dirname, '**/*.graphql'));
 
 const schema = makeExecutableSchema({
-    typeDefs: typesArray,
+  typeDefs: typesArray,
 });
 
 const root = {
-    description: 'Red Shoe',
-    price: 42.2,
+  items: require
 };
 
 const app = express();
 
 app.use(
-    '/graphql',
-    graphqlHTTP({
-        schema: schema,
-        rootValue: root,
-        graphiql: true,
-    })
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
 );
 
 app.listen(3000, () => console.log('started'));

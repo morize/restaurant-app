@@ -13,5 +13,4 @@ type Item {
   description: String!
   price: Float!
   type: String!
-  range: String!
 }
