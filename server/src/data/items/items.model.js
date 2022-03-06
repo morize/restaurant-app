@@ -1,45 +1,73 @@
-const items = [
-  {
-    id: 'chicken-sandwich',
-    description: 'Chicken Sandwich',
-    price: 3.4,
-    type: 'breakfast',
-  },
-  {
-    id: 'tuna-sandwich',
-    description: 'Tuna Sandwich',
-    price: 3.0,
-    type: 'breakfast',
-  },
-  {
-    id: 'hot-coffee',
-    description: 'Hot Coffee',
-    price: 1.5,
-    type: 'drinks',
-  },
-];
+const items = require('./items.mongo');
+var ObjectId = require('mongoose').Types.ObjectId;
 
-function getAllItems() {
-  return items;
+async function getAllItems() {
+  return await items.find({});
 }
 
-function getItemById(id) {
-  return items.find((item) => item.id == id);
+async function getItemById(id) {
+  checkForValidItemId(id);
+
+  const item = await items.findById(id);
+
+  checkIfItemExists(item);
+
+  return item;
 }
 
-function getItemsByPrice(min, max) {
-  return items.filter((item) => item.price >= min && item.price <= max);
+async function getItemsByPrice(min, max) {
+  return await items.find({ price: { $gte: min, $lte: max } });
 }
 
-function addNewItem(id, description, price, type) {
-  const newItem = {
-    id,
-    description,
-    price,
-    type,
-  };
-  items.push(newItem);
-  return newItem;
+async function addNewItem(name, description, price, type) {
+  try {
+    return await items.create({
+      name,
+      description,
+      price,
+      type,
+    });
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+async function updateItem(id, name, description, price, type) {
+  checkForValidItemId(id);
+
+  const updatedItem = await items.findOneAndUpdate(
+    { _id: id },
+    {
+      name,
+      description,
+      price,
+      type,
+    }
+  );
+
+  checkIfItemExists(updatedItem);
+
+  return updatedItem;
+}
+
+async function deleteItem(id) {
+  checkForValidItemId(id);
+
+  const itemToDelete = await items.findOneAndDelete({ _id: id });
+
+  checkIfItemExists(itemToDelete);
+
+  return itemToDelete;
+}
+
+function checkForValidItemId(id) {
+  if (!ObjectId.isValid(id) || !(ObjectId(id).toString() === id)) {
+    throw new Error('Invalid ID');
+  }
+}
+
+function checkIfItemExists(item) {
+  if (!item) throw new Error('Item not found');
 }
 
 module.exports = {
@@ -47,4 +75,6 @@ module.exports = {
   getItemById,
   getItemsByPrice,
   addNewItem,
+  updateItem,
+  deleteItem,
 };

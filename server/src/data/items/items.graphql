@@ -5,12 +5,28 @@ type Query {
 }
 
 type Mutation {
-  addNewItem(id: ID!, description: String!, price: Float!, type: String!): Item
+  addNewItem(
+    name: String!
+    description: String
+    price: Float!
+    type: String!
+  ): Item
+
+  updateItem(
+    id: ID!
+    name: String
+    description: String
+    price: Float
+    type: String
+  ): Item
+
+  deleteItem(id: ID!): Item
 }
 
 type Item {
-  id: ID!
-  description: String!
+  _id: ID!
+  name: String!
+  description: String
   price: Float!
   type: String!
 }
