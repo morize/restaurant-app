@@ -1,14 +1,41 @@
 type Query {
   orders: [Order]
+  order(id: ID!): Order
+}
+
+type Mutation {
+  addNewOrder(
+    clientId: ID!
+    extraInfo: String
+    orderItems: [OrderItemInput]!
+  ): Order
+  updateStatus(id: ID!, status: OrderStatus!): Order
+  deleteOrder(id: ID!): Order
 }
 
 type Order {
-  date: String!
-  subtotal: Float!
-  items: [OrderItem]
+  _id: ID!
+  clientName: String!
+  clientId: ID!
+  status: String!
+  extraInfo: String
+  totalPrice: Float!
+  orderItems: [OrderItem]!
+  createdAt: String!
 }
 
 type OrderItem {
   item: Item!
   quantity: Int!
+}
+
+input OrderItemInput {
+  itemId: ID!
+  quantity: Int!
+}
+
+enum OrderStatus {
+  pending
+  completed
+  canceled
 }

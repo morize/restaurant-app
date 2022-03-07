@@ -1,5 +1,8 @@
 const items = require('./items.mongo');
-var ObjectId = require('mongoose').Types.ObjectId;
+const {
+  checkForValidItemId,
+  checkIfItemExists,
+} = require('../../utils/errorHandling');
 
 async function getAllItems() {
   return await items.find({});
@@ -58,16 +61,6 @@ async function deleteItem(id) {
   checkIfItemExists(itemToDelete);
 
   return itemToDelete;
-}
-
-function checkForValidItemId(id) {
-  if (!ObjectId.isValid(id) || !(ObjectId(id).toString() === id)) {
-    throw new Error('Invalid ID');
-  }
-}
-
-function checkIfItemExists(item) {
-  if (!item) throw new Error('Item not found');
 }
 
 module.exports = {
