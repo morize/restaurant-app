@@ -1,0 +1,6 @@
+{
+  "short_name": "Hotel Catering",
+  "name": "Hotel Catering React App",
+  "start_url": ".",
+  "display": "standalone"
+}
