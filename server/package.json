@@ -16,7 +16,9 @@
     "express": "^4.17.3",
     "graphql": "^16.3.0",
     "helmet": "^5.0.2",
-    "mongoose": "^6.2.4"
+    "mongoose": "^6.2.4",
+    "passport": "^0.5.2",
+    "passport-google-oauth20": "^2.0.0"
   },
   "description": ""
 }
