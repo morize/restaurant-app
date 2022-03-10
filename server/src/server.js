@@ -1,59 +1,35 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 
-const passport = require('passport');
-const { Strategy } = require('passport-google-oauth20');
-
 require('dotenv').config();
 
-const {
-  getSchema,
-  startMongoDBServer,
-  determineHelmetMiddleware,
-  startAppListener,
-} = require('./utils/serverSetup');
+const { getSchema } = require('./data/schema');
 
-const {
-  AUTH_OPTIONS,
-  verifyAuthCallback,
-  loginGoogle,
-  receiveGoogleCallback,
-} = require('./utils/auth');
+const { setHelmetMiddleware } = require('./setup/helmet');
+const { setGooglePassportStrategy } = require('./setup/passport');
+const { startMongoDBServer } = require('./setup/database');
+const { startAppListenerByProtocol } = require('./setup/protocol');
+
+const authRoutes = require('./setup/routes/authRoutes');
 
 async function startApolloServer() {
   const app = express();
-  const helmet = await determineHelmetMiddleware();
+  const helmet = await setHelmetMiddleware();
   const server = new ApolloServer({ schema: getSchema() });
 
   app.use(helmet);
 
-  passport.use(new Strategy(AUTH_OPTIONS, verifyAuthCallback));
+  setGooglePassportStrategy();
 
-  app.get(
-    '/auth/google',
-    passport.authenticate('google', {
-      scope: ['email'],
-    })
-  );
-
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google', {
-      failureRedirect: '/failed',
-      successRedirect: '/',
-      session: false,
-    }),
-    () => console.log('Google CALLED BACK')
-  );
-
-  // app.get('/auth/logout', logout);
+  app.use(authRoutes);
 
   await startMongoDBServer();
   await server.start();
 
   server.applyMiddleware({ app, path: '/graphql' });
   server.applyMiddleware({ app, path: '/login' });
-  startAppListener(app);
+  
+  startAppListenerByProtocol(app);
 }
 
 startApolloServer();
