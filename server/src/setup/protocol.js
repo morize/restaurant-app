@@ -1,12 +1,10 @@
 const { readFileSync } = require('fs');
 const { createServer } = require('https');
 
-function startAppListenerByProtocol(app) {
-  const isEnvironmentProduction = process.env.NODE_ENV === 'production';
-  const PORT_DEV = process.env.PORT_DEV;
-  const PORT_PROD = process.env.PORT_PROD;
+const { ENVIRONMENT, PORT_PROD, PORT_DEV } = require('../utils/config');
 
-  if (isEnvironmentProduction) {
+function startAppListenerByProtocol(app) {
+  if (ENVIRONMENT === 'production') {
     createServer(
       {
         key: readFileSync('.ssl/key.pem'),

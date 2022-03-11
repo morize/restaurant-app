@@ -1,11 +1,11 @@
 const helmet = require('helmet');
 
-async function setHelmetMiddleware() {
-  const isEnvironmentProduction = process.env.NODE_ENV === 'production';
+const { ENVIRONMENT } = require('../utils/config');
 
+async function setHelmetMiddleware() {
   return await helmet({
-    contentSecurityPolicy: isEnvironmentProduction,
-    crossOriginEmbedderPolicy: isEnvironmentProduction,
+    contentSecurityPolicy: ENVIRONMENT === 'production',
+    crossOriginEmbedderPolicy: ENVIRONMENT === 'production',
   });
 }
 

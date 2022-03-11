@@ -1,19 +1,25 @@
 const passport = require('passport');
 const { Strategy } = require('passport-google-oauth20');
 
+const { CLIENT_ID, CLIENT_SECRET } = require('../utils/config');
+
 function verifyAuthCallback(accessToken, refreshToken, profile, done) {
-  console.log(`Token: ${accessToken}`);
+  console.log(accessToken);
   done(null, profile);
 }
 
 function setGooglePassportStrategy() {
   const AUTH_OPTIONS = {
     callbackURL: '/auth/google/callback',
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
   };
 
   passport.use(new Strategy(AUTH_OPTIONS, verifyAuthCallback));
 }
 
-module.exports = { setGooglePassportStrategy };
+function initializePassport() {
+  return passport.initialize();
+}
+
+module.exports = { setGooglePassportStrategy, initializePassport };

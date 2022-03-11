@@ -6,7 +6,7 @@ const authRoutes = Router();
 authRoutes.get(
   '/auth/google',
   passport.authenticate('google', {
-    scope: ['email'],
+    scope: ['email', 'profile'],
   })
 );
 
@@ -15,7 +15,6 @@ authRoutes.get(
   passport.authenticate('google', {
     failureRedirect: '/failed',
     successRedirect: '/',
-    session: false,
   }),
   () => console.log('Google CALLED BACK')
 );
