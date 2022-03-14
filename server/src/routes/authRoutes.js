@@ -14,9 +14,9 @@ authRoutes.get(
   '/auth/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/failed',
-    successRedirect: '/',
-  }),
-  () => console.log('Google CALLED BACK')
+    successRedirect: 'http://localhost:3001',
+    session: true,
+  })
 );
 
 module.exports = authRoutes;

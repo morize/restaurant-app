@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
+import App from './App';
+import { config } from './Utils/config';
+
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: `${config.API_URL}/graphql`,
   cache: new InMemoryCache(),
   name: 'HotelCateringApp',
+  credentials: 'include',
 });
 
 ReactDOM.render(

@@ -1,9 +1,19 @@
+const cors = require('cors');
 const { readFileSync } = require('fs');
 const { createServer } = require('https');
 
 const { ENVIRONMENT, PORT_PROD, PORT_DEV } = require('../utils/config');
 
-function startAppListenerByProtocol(app) {
+function corsMiddleware() {
+  const corsOptions = {
+    origin: 'http://localhost:3001',
+    credentials: true,
+  };
+
+  return cors(corsOptions);
+}
+
+function startAppListener(app) {
   if (ENVIRONMENT === 'production') {
     createServer(
       {
@@ -17,4 +27,4 @@ function startAppListenerByProtocol(app) {
   }
 }
 
-module.exports = { startAppListenerByProtocol };
+module.exports = { corsMiddleware, startAppListener };

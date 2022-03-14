@@ -1,49 +1,42 @@
 const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
-const cookieSession = require('cookie-session');
-
 require('dotenv').config();
 
-const { getSchema } = require('./utils/schema');
-
-const { setHelmetMiddleware } = require('./setup/helmet');
-const {
-  setGooglePassportStrategy,
-  initializePassport,
-} = require('./setup/passport');
+const { helmetMiddleware } = require('./setup/helmet');
 const { startMongoDBServer } = require('./setup/database');
-const { startAppListenerByProtocol } = require('./setup/protocol');
+const { corsMiddleware, startAppListener } = require('./setup/protocol');
+const { cookieMiddleware } = require('./setup/cookies');
+const {
+  setupGooglePassportStrategy,
+  initializePassport,
+  initializePassportSession,
+} = require('./setup/passport');
+const { apolloServer } = require('./setup/apollo');
 
-const authRoutes = require('./setup/routes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 async function startApolloServer() {
   const app = express();
-  const helmet = await setHelmetMiddleware();
-  const server = new ApolloServer({ schema: getSchema() });
 
-  setGooglePassportStrategy();
+  setupGooglePassportStrategy();
 
-  app.use(helmet);
+  app.use(helmetMiddleware());
 
-  app.use(
-    cookieSession({
-      name: 'session',
-      maxAge: 1000 * 60 * 60 * 24,
-      keys: [],
-    })
-  );
+  app.use(cookieMiddleware());
 
-  app.use(initializePassport());
+  app.use([initializePassport(), initializePassportSession()]);
 
   app.use(authRoutes);
+
+  app.use(corsMiddleware());
+
+  const server = apolloServer();
 
   await startMongoDBServer();
   await server.start();
 
-  server.applyMiddleware({ app, path: '/graphql' });
-  server.applyMiddleware({ app, path: '/login' });
+  server.applyMiddleware({ app, path: '/graphql', cors: false });
 
-  startAppListenerByProtocol(app);
+  startAppListener(app);
 }
 
 startApolloServer();

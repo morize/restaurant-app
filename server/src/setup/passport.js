@@ -4,11 +4,10 @@ const { Strategy } = require('passport-google-oauth20');
 const { CLIENT_ID, CLIENT_SECRET } = require('../utils/config');
 
 function verifyAuthCallback(accessToken, refreshToken, profile, done) {
-  console.log(accessToken);
   done(null, profile);
 }
 
-function setGooglePassportStrategy() {
+function setupGooglePassportStrategy() {
   const AUTH_OPTIONS = {
     callbackURL: '/auth/google/callback',
     clientID: CLIENT_ID,
@@ -16,10 +15,26 @@ function setGooglePassportStrategy() {
   };
 
   passport.use(new Strategy(AUTH_OPTIONS, verifyAuthCallback));
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    done(null, id);
+  });
 }
 
 function initializePassport() {
   return passport.initialize();
 }
 
-module.exports = { setGooglePassportStrategy, initializePassport };
+function initializePassportSession() {
+  return passport.session();
+}
+
+module.exports = {
+  setupGooglePassportStrategy,
+  initializePassport,
+  initializePassportSession,
+};
