@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const passport = require('passport');
 
+const { PLAYGROUND } = require('../utils/config');
 const authRoutes = Router();
 
 authRoutes.get(
@@ -14,7 +15,9 @@ authRoutes.get(
   '/auth/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/failed',
-    successRedirect: 'http://localhost:3001',
+    successRedirect: PLAYGROUND
+      ? 'https://studio.apollographql.com/sandbox/explorer'
+      : 'http://localhost:3001',
     session: true,
   })
 );

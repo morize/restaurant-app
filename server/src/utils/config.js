@@ -4,6 +4,7 @@ const PORT_DEV = process.env.PORT_DEV;
 const PORT_PROD = process.env.PORT_PROD;
 
 const ENVIRONMENT = process.env.NODE_ENV;
+const PLAYGROUND = process.env.PLAYGROUND;
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -16,6 +17,7 @@ module.exports = {
   PORT_DEV,
   PORT_PROD,
   ENVIRONMENT,
+  PLAYGROUND,
   CLIENT_ID,
   CLIENT_SECRET,
   COOKIE_KEY_1,

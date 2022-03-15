@@ -1,5 +1,10 @@
 const cookieSession = require('cookie-session');
-const { COOKIE_KEY_1, COOKIE_KEY_2, ENVIRONMENT } = require('../utils/config');
+const {
+  COOKIE_KEY_1,
+  COOKIE_KEY_2,
+  ENVIRONMENT,
+  PLAYGROUND,
+} = require('../utils/config');
 
 function cookieMiddleware() {
   const isProduction = ENVIRONMENT === 'production';
@@ -10,7 +15,7 @@ function cookieMiddleware() {
     keys: [COOKIE_KEY_1, COOKIE_KEY_2],
     httpOnly: isProduction,
     secure: isProduction,
-    sameSite: isProduction ? 'none' : 'strict',
+    sameSite: isProduction | PLAYGROUND ? 'none' : 'strict',
   });
 }
 
