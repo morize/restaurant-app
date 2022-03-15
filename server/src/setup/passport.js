@@ -1,7 +1,7 @@
 const passport = require('passport');
 const { Strategy } = require('passport-google-oauth20');
 
-const { CLIENT_ID, CLIENT_SECRET } = require('../utils/config');
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../utils/config');
 const { getUserByGoogleId, addNewUser } = require('../data/users/users.model');
 
 function verifyAuthCallback(accessToken, refreshToken, profile, done) {
@@ -11,8 +11,8 @@ function verifyAuthCallback(accessToken, refreshToken, profile, done) {
 function setupGooglePassportStrategy() {
   const AUTH_OPTIONS = {
     callbackURL: '/auth/google/callback',
-    clientID: CLIENT_ID,
-    clientSecret: CLIENT_SECRET,
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
   };
 
   passport.use(new Strategy(AUTH_OPTIONS, verifyAuthCallback));

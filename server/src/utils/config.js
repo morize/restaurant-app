@@ -6,8 +6,8 @@ const PORT_PROD = process.env.PORT_PROD;
 const ENVIRONMENT = process.env.NODE_ENV;
 const PLAYGROUND = process.env.PLAYGROUND;
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 const COOKIE_KEY_1 = process.env.COOKIE_KEY_1;
 const COOKIE_KEY_2 = process.env.COOKIE_KEY_2;
@@ -18,8 +18,8 @@ module.exports = {
   PORT_PROD,
   ENVIRONMENT,
   PLAYGROUND,
-  CLIENT_ID,
-  CLIENT_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
   COOKIE_KEY_1,
   COOKIE_KEY_2,
 };
