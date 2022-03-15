@@ -13,7 +13,6 @@ function cookieMiddleware() {
     name: 'session',
     maxAge: 1000 * 60 * 60 * 24,
     keys: [COOKIE_KEY_1, COOKIE_KEY_2],
-    httpOnly: isProduction,
     secure: isProduction,
     sameSite: isProduction | PLAYGROUND ? 'none' : 'strict',
   });

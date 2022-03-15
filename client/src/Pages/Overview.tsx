@@ -17,7 +17,8 @@ const Overview = () => {
             name: {name}
           </p>
         ))}
-      <a href={`${config.API_URL}/auth/google`} >Login</a>
+      <a href={`${config.API_URL}/auth/google`}>Login</a>
+      <a href={`${config.API_URL}/auth/logout`}>Logout</a>
     </div>
   );
 };

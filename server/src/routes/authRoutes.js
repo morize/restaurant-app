@@ -7,7 +7,8 @@ const authRoutes = Router();
 authRoutes.get(
   '/auth/google',
   passport.authenticate('google', {
-    scope: ['email', 'profile'],
+    scope: ['profile'],
+    prompt: 'select_account',
   })
 );
 
@@ -21,5 +22,12 @@ authRoutes.get(
     session: true,
   })
 );
+
+authRoutes.get('/auth/logout', (req, res) => {
+  req.logout();
+  return res.redirect('http://localhost:3001');
+});
+
+authRoutes.get('/failure', (req, res) => res.send('Failed to log in.'));
 
 module.exports = authRoutes;

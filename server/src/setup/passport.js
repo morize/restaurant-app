@@ -4,33 +4,15 @@ const { Strategy } = require('passport-google-oauth20');
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../utils/config');
 const { getUserByGoogleId, addNewUser } = require('../data/users/users.model');
 
-function verifyAuthCallback(accessToken, refreshToken, profile, done) {
-  done(null, profile);
-}
+async function findOrCreateUser(user, done) {
+  const existingUser = await getUserByGoogleId(user.id);
 
-function setupGooglePassportStrategy() {
-  const AUTH_OPTIONS = {
-    callbackURL: '/auth/google/callback',
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-  };
-
-  passport.use(new Strategy(AUTH_OPTIONS, verifyAuthCallback));
-
-  passport.serializeUser(async (user, done) => {
-    const existingUser = await getUserByGoogleId(user.id);
-
-    if (!existingUser) {
-      const newUserDoc = await addNewUser(user.name.givenName, user.id);
-      done(null, newUserDoc);
-    } else {
-      done(null, existingUser);
-    }
-  });
-
-  passport.deserializeUser((obj, done) => {
-    done(null, obj);
-  });
+  if (!existingUser) {
+    const newUserDoc = await addNewUser(user.name.givenName, user.id);
+    done(null, newUserDoc._id);
+  } else {
+    done(null, existingUser.id);
+  }
 }
 
 function initializePassport() {
@@ -41,8 +23,27 @@ function initializePassportSession() {
   return passport.session();
 }
 
+function setupGooglePassportStrategy() {
+  const googleStrategyOptions = {
+    callbackURL: '/auth/google/callback',
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+  };
+
+  passport.use(
+    new Strategy(
+      googleStrategyOptions,
+      (accessToken, refreshToken, profile, done) => done(null, profile)
+    )
+  );
+
+  passport.serializeUser(findOrCreateUser);
+
+  passport.deserializeUser((id, done) => done(null, id));
+}
+
 module.exports = {
-  setupGooglePassportStrategy,
   initializePassport,
   initializePassportSession,
+  setupGooglePassportStrategy,
 };
