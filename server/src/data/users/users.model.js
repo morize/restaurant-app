@@ -5,13 +5,6 @@ const {
   checkIfItemExists,
 } = require('../../utils/errorHandling');
 
-async function createUser(userName, googleId) {
-  return await users.create({
-    userName,
-    googleId,
-  });
-}
-
 async function getUserById(id) {
   checkForValidItemId(id);
 
@@ -24,6 +17,13 @@ async function getUserById(id) {
 
 async function getAllUsers() {
   return await users.find({});
+}
+
+async function createUser(userName, googleId) {
+  return await users.create({
+    userName,
+    googleId,
+  });
 }
 
 async function updateUserById(id, userName, googleId, role) {
@@ -58,9 +58,9 @@ async function checkIfCurrentUserIsAdmin(id) {
 }
 
 module.exports = {
-  createUser,
   getUserById,
   getAllUsers,
+  createUser,
   updateUserById,
   deleteUserById,
 

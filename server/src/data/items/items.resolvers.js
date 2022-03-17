@@ -1,21 +1,27 @@
-const itemsModel = require('./items.model');
-const { throwErrorByUserRole } = require('../users/users.model');
+const {
+  getItemById,
+  getAllItems,
+  getItemsByPrice,
+  createItem,
+  updateItem,
+  deleteItem,
+} = require('./items.model');
+const { checkIfCurrentUserIsAdmin } = require('../users/users.model');
 
 module.exports = {
   Query: {
-    items: async () => itemsModel.getAllItems(),
+    getItem: async (_, args) => await getItemById(args.id),
 
-    item: async (_, args) => itemsModel.getItemById(args.id),
+    getAllItems: async () => await getAllItems(),
 
-    itemsByPrice: async (_, args) =>
-      itemsModel.getItemsByPrice(args.min, args.max),
+    getItemsByPrice: async (_, args) =>
+      await getItemsByPrice(args.min, args.max),
   },
 
   Mutation: {
-    addNewItem: async (_, args, context) => {
-      await throwErrorByUserRole(context.id);
-
-      return itemsModel.addNewItem(
+    createItem: async (_, args, { currentUserId }) => {
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return await createItem(
         args.name,
         args.description,
         args.price,
@@ -23,10 +29,9 @@ module.exports = {
       );
     },
 
-    updateItem: async (_, args, context) => {
-      await throwErrorByUserRole(context.id);
-
-      return itemsModel.updateItem(
+    updateItem: async (_, args, { currentUserId }) => {
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return await updateItem(
         args.id,
         args.name,
         args.description,
@@ -36,9 +41,8 @@ module.exports = {
     },
 
     deleteItem: async (_, args) => {
-      await throwErrorByUserRole(context.id);
-
-      return itemsModel.deleteItem(args.id);
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return deleteItem(args.id);
     },
   },
 };

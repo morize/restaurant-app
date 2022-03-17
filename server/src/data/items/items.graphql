@@ -1,11 +1,11 @@
 type Query {
-  items: [Item]
-  item(id: ID!): Item
-  itemsByPrice(min: Float!, max: Float!): [Item]
+  getItem(id: ID!): Item
+  getAllItems: [Item]
+  getItemsByPrice(min: Float!, max: Float!): [Item]
 }
 
 type Mutation {
-  addNewItem(
+  createItem(
     name: String!
     description: String
     price: Float!
