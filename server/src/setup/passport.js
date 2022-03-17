@@ -2,13 +2,13 @@ const passport = require('passport');
 const { Strategy } = require('passport-google-oauth20');
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../utils/config');
-const { getUserByGoogleId, addNewUser } = require('../data/users/users.model');
+const { getUserByGoogleId, createUser } = require('../data/users/users.model');
 
 async function findOrCreateUser(user, done) {
   const existingUser = await getUserByGoogleId(user.id);
 
   if (!existingUser) {
-    const newUserDoc = await addNewUser(user.name.givenName, user.id);
+    const newUserDoc = await createUser(user.name.givenName, user.id);
     done(null, newUserDoc._id);
   } else {
     done(null, existingUser._id);
