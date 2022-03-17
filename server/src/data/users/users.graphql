@@ -1,9 +1,11 @@
 type Query {
-  users: [User]
-  user(id: ID!): User
+  getCurrentUser: User
+  getUser(id: ID!): User
+  getAllUsers: [User]
 }
 
 type Mutation {
+  updateCurrentUser(userName: String, googleId: Int): User
   updateUser(id: ID!, userName: String, googleId: Int, role: String): User
   deleteUser(id: ID!): User
 }

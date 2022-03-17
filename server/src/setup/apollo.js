@@ -14,7 +14,7 @@ function getSchema() {
 }
 
 function readContext({ req }) {
-  return { id: req.user, isAuthenticated: req.isAuthenticated() };
+  return { currentUserId: req.user, isAuthenticated: req.isAuthenticated() };
 }
 
 function apolloServer() {

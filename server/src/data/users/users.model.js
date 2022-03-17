@@ -3,11 +3,8 @@ const users = require('./users.mongo');
 const {
   checkForValidItemId,
   checkIfItemExists,
+  checkIfAuthenticated,
 } = require('../../utils/errorHandling');
-
-async function getAllUsers() {
-  return await users.find({}, { versionKey: false });
-}
 
 async function getUserById(id) {
   checkForValidItemId(id);
@@ -19,64 +16,88 @@ async function getUserById(id) {
   return user;
 }
 
-async function addNewUser(userName, googleId) {
-  try {
-    const newUser = await users.create({
-      userName,
-      googleId,
-    });
-
-    return newUser.toObject({ versionKey: false });
-  } catch (err) {
-    throw new Error(err);
-  }
-}
-
-async function updateUser(id, userName, googleId, role) {
+async function updateUserById(id, userName, googleId, role) {
   checkForValidItemId(id);
 
-  const updatedItem = await orders.findOneAndUpdate(
+  return await users.findOneAndUpdate(
     { _id: id },
     { userName, googleId, role },
     { runValidators: true }
   );
-
-  //checkIfItemExists(updatedItem);
-
-  return updatedItem;
 }
 
-async function deleteUser(id) {
-  checkForValidItemId(id);
-
-  const userToDelete = await users.findOneAndDelete({ _id: id });
-
-  return userToDelete;
-}
-
-async function getUserByGoogleId(googleId) {
-  return await users.findOne({ googleId }, { __v: false });
-}
-
-async function throwErrorByUserRole(id) {
+async function checkIfUserIsAdmin(id) {
   const user = await users.findById(id);
 
   if (!user) {
-    throw new Error('You are not logged in.');
+    throw new Error('Unrecognized user or not logged in.');
   }
 
-  if (user.role === 'guest')
+  if (user.role !== 'admin')
     throw new Error(
       'Your request is not authorized. Only managers or admins can add or modify this field'
     );
 }
 
+async function getUserByGoogleId(googleId) {
+  return await users.findOne({ googleId });
+}
+
+async function addNewUser(userName, googleId) {
+  const newUser = await users.create({
+    userName,
+    googleId,
+  });
+
+  return newUser.toObject({ versionKey: false });
+}
+
+async function getCurrentUser(id, isAuthenticated) {
+  checkIfAuthenticated(isAuthenticated);
+  return await getUserById(id);
+}
+
+async function getSpecificUser(id, currentUserId) {
+  await checkIfUserIsAdmin(currentUserId);
+  return await getUserById(id);
+}
+
+async function getAllUsers(currentUserId) {
+  await checkIfUserIsAdmin(currentUserId);
+  return await users.find({}, { versionKey: false });
+}
+
+async function updateCurrentUser(
+  currentUserId,
+  isAuthenticated,
+  userName,
+  googleId
+) {
+  checkIfAuthenticated(isAuthenticated);
+  return await updateUserById(currentUserId, userName, googleId);
+}
+
+async function updateSpecificUser(currentUserId, id, userName, googleId, role) {
+  await checkIfUserIsAdmin(currentUserId);
+  return await updateUserById(id, userName, googleId, role);
+}
+
+async function deleteSpecificUser(currentUserId, id) {
+  checkForValidItemId(id);
+
+  await checkIfUserIsAdmin(currentUserId);
+
+  return await users.findOneAndDelete({ _id: id });
+}
+
 module.exports = {
-  getAllUsers,
-  getUserById,
   addNewUser,
-  updateUser,
-  deleteUser,
   getUserByGoogleId,
-  throwErrorByUserRole,
+
+  getCurrentUser,
+  getSpecificUser,
+  getAllUsers,
+  updateCurrentUser,
+  updateSpecificUser,
+  deleteSpecificUser,
 };

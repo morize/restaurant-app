@@ -11,7 +11,7 @@ async function findOrCreateUser(user, done) {
     const newUserDoc = await addNewUser(user.name.givenName, user.id);
     done(null, newUserDoc._id);
   } else {
-    done(null, existingUser.id);
+    done(null, existingUser._id);
   }
 }
 

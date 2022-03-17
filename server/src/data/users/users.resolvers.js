@@ -1,29 +1,36 @@
 const usersModel = require('./users.model');
-const { checkIfLoggedIn } = require('../../utils/errorHandling');
-const { throwErrorByUserRole } = require('../users/users.model');
 
 module.exports = {
   Query: {
-    users: (_, args, context) => {
-      checkIfLoggedIn(context.isAuthenticated);
-      return usersModel.getAllUsers();
-    },
+    getCurrentUser: async (_, __, { currentUserId, isAuthenticated }) =>
+      await usersModel.getCurrentUser(currentUserId, isAuthenticated),
 
-    user: (_, args) => {
-      checkIfLoggedIn(context.isAuthenticated);
-      return usersModel.getUserById(args.id);
-    },
+    getUser: async (_, args, { currentUserId }) =>
+      await usersModel.getSpecificUser(args.id, currentUserId),
+
+    getAllUsers: async (_, __, { currentUserId }) =>
+      await usersModel.getAllUsers(currentUserId),
   },
 
   Mutation: {
-    updateUser: (_, args, context) => {
-      throwErrorByUserRole(context.id);
-      usersModel.updateUser(args.id, args.userName, args.googleId, args.role);
-    },
+    updateCurrentUser: async (_, args, { currentUserId, isAuthenticated }) =>
+      await usersModel.updateCurrentUser(
+        currentUserId,
+        isAuthenticated,
+        args.userName,
+        args.googleId
+      ),
 
-    deleteUser: (_, args, context) => {
-      throwErrorByUserRole(context.id);
-      usersModel.deleteUser(args.id);
-    },
+    updateUser: async (_, args, { currentUserId }) =>
+      await usersModel.updateSpecificUser(
+        currentUserId,
+        args.id,
+        args.userName,
+        args.googleId,
+        args.role
+      ),
+
+    deleteUser: async (_, args, { currentUserId }) =>
+      await usersModel.deleteSpecificUser(currentUserId, args.id),
   },
 };
