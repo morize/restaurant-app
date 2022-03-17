@@ -1,11 +1,11 @@
 const items = require('./items.mongo');
 const {
-  checkForValidItemId,
+  checkForValidId,
   checkIfItemExists,
 } = require('../../utils/errorHandling');
 
 async function getItemById(itemId) {
-  checkForValidItemId(itemId);
+  checkForValidId(itemId);
 
   const item = await items.findById(itemId);
 
@@ -32,7 +32,7 @@ async function createItem(name, description, price, type) {
 }
 
 async function updateItem(itemId, name, description, price, type) {
-  checkForValidItemId(id);
+  checkForValidId(id);
 
   const updatedItem = await items.findOneAndUpdate(
     { _id: itemId },
@@ -50,7 +50,7 @@ async function updateItem(itemId, name, description, price, type) {
 }
 
 async function deleteItem(itemId) {
-  checkForValidItemId(itemId);
+  checkForValidId(itemId);
 
   const itemToDelete = await items.findOneAndDelete({ _id: itemId });
 

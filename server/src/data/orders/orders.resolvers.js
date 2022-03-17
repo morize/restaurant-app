@@ -1,37 +1,49 @@
-const ordersModel = require('./orders.model');
-const { checkIfLoggedIn } = require('../../utils/errorHandling');
+const {
+  getOrderById,
+  getOrdersFromUserId,
+  getAllOrders,
+  createOrder,
+  updateOrder,
+  deleteOrder,
+} = require('./orders.model');
+const { checkIfCurrentUserIsAdmin } = require('../users/users.model');
+const { checkIfAuthenticated } = require('../../utils/errorHandling');
 
 module.exports = {
   Query: {
-    orders: (_, args, context) => {
-      checkIfLoggedIn(context.isAuthenticated);
-      return ordersModel.getAllOrders();
+    getOrder: async (_, args, { currentUserId }) => {
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return await getOrderById(args.orderId);
     },
 
-    order: (_, args, context) => {
-      checkIfLoggedIn(context.isAuthenticated);
-      return ordersModel.getOrderById(args.id);
+    getMyOrders: async (_, __, { currentUserId, isAuthenticated }) => {
+      checkIfAuthenticated(isAuthenticated);
+      return await getOrdersFromUserId(currentUserId);
+    },
+
+    getAllOrders: async (_, __, { currentUserId }) => {
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return await getAllOrders();
     },
   },
 
   Mutation: {
-    addNewOrder: (_, args, context) => {
-      checkIfLoggedIn(context.isAuthenticated);
-      return ordersModel.addNewOrder(
-        args.clientId,
-        args.extraInfo,
-        args.orderItems
-      );
+    createOrder: async (_, args, { currentUserId, isAuthenticated }) => {
+      checkIfAuthenticated(isAuthenticated);
+      return await createOrder(currentUserId, args.orderItems, args.extraInfo);
     },
 
-    updateStatus: (_, args, context) => {
-      checkIfLoggedIn(context.isAuthenticated);
-      return ordersModel.updateStatus(args.id, args.status);
+    // Update own Order if it's not older than 20 minutes?
+    // Create Order for User as admin
+
+    updateOrder: async (_, args, { currentUserId }) => {;
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return await updateOrder(args.orderId, args.status);
     },
 
-    deleteOrder: (_, args, context) => {
-      checkIfLoggedIn(context.isAuthenticated);
-      return ordersModel.deleteOrder(args.id);
+    deleteOrder: async (_, args, { currentUserId }) => {
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return await deleteOrder(args.orderId);
     },
   },
 };

@@ -7,8 +7,8 @@ const ordersSchema = new Schema({
     required: true,
   },
 
-  clientName: {
-    type: String,
+  orderItems: {
+    type: [{ item: { type: itemsModel.schema }, quantity: Number, _id: false }],
     required: true,
   },
 
@@ -23,11 +23,6 @@ const ordersSchema = new Schema({
 
   totalPrice: {
     type: Number,
-    required: true,
-  },
-
-  orderItems: {
-    type: [{ item: { type: itemsModel.schema }, quantity: Number, _id: false }],
     required: true,
   },
 

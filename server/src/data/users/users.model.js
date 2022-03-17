@@ -1,12 +1,12 @@
 const users = require('./users.mongo');
 
 const {
-  checkForValidItemId,
+  checkForValidId,
   checkIfItemExists,
 } = require('../../utils/errorHandling');
 
 async function getUserById(id) {
-  checkForValidItemId(id);
+  checkForValidId(id);
 
   const user = await users.findById(id);
 
@@ -27,7 +27,7 @@ async function createUser(userName, googleId) {
 }
 
 async function updateUserById(id, userName, googleId, role) {
-  checkForValidItemId(id);
+  checkForValidId(id);
   return await users.findOneAndUpdate(
     { _id: id },
     { userName, googleId, role },
@@ -36,7 +36,7 @@ async function updateUserById(id, userName, googleId, role) {
 }
 
 async function deleteUserById(id) {
-  checkForValidItemId(id);
+  checkForValidId(id);
   return await users.findOneAndDelete({ _id: id });
 }
 

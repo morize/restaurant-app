@@ -1,26 +1,22 @@
 type Query {
-  orders: [Order]
-  order(id: ID!): Order
+  getOrder(orderId: ID!): Order
+  getMyOrders: [Order]
+  getAllOrders: [Order]
 }
 
 type Mutation {
-  addNewOrder(
-    clientId: ID!
-    extraInfo: String
-    orderItems: [OrderItemInput]!
-  ): Order
-  updateStatus(id: ID!, status: OrderStatus!): Order
-  deleteOrder(id: ID!): Order
+  createOrder(orderItems: [OrderItemInput]!, extraInfo: String): Order
+  updateOrder(orderId: ID!, status: OrderStatus): Order
+  deleteOrder(orderId: ID!): Order
 }
 
 type Order {
   _id: ID!
-  clientName: String!
   clientId: ID!
-  status: String!
-  extraInfo: String
-  totalPrice: Float!
   orderItems: [OrderItem]!
+  totalPrice: Float!
+  extraInfo: String
+  status: String!
   createdAt: String!
 }
 

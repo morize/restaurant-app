@@ -1,6 +1,6 @@
 var ObjectId = require('mongoose').Types.ObjectId;
 
-function checkForValidItemId(id) {
+function checkForValidId(id) {
   if (!ObjectId.isValid(id) && !(ObjectId(id).toString() === id)) {
     throw new Error('Invalid ID');
   }
@@ -15,7 +15,7 @@ function checkIfAuthenticated(isLoggedIn) {
 }
 
 module.exports = {
-  checkForValidItemId,
+  checkForValidId,
   checkIfItemExists,
   checkIfAuthenticated,
 };
