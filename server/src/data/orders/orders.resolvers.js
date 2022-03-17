@@ -1,17 +1,37 @@
 const ordersModel = require('./orders.model');
+const { checkIfLoggedIn } = require('../../utils/errorHandling');
 
 module.exports = {
   Query: {
-    orders: () => ordersModel.getAllOrders(),
+    orders: (_, args, context) => {
+      checkIfLoggedIn(context.isAuthenticated);
+      return ordersModel.getAllOrders();
+    },
 
-    order: (_, args) => ordersModel.getOrderById(args.id),
+    order: (_, args, context) => {
+      checkIfLoggedIn(context.isAuthenticated);
+      return ordersModel.getOrderById(args.id);
+    },
   },
 
   Mutation: {
-    addNewOrder: (_, args) =>
-      ordersModel.addNewOrder(args.clientId, args.extraInfo, args.orderItems),
+    addNewOrder: (_, args, context) => {
+      checkIfLoggedIn(context.isAuthenticated);
+      return ordersModel.addNewOrder(
+        args.clientId,
+        args.extraInfo,
+        args.orderItems
+      );
+    },
 
-    updateStatus: (_, args) => ordersModel.updateStatus(args.id, args.status),
-    deleteOrder: (_, args) => ordersModel.deleteOrder(args.id),
+    updateStatus: (_, args, context) => {
+      checkIfLoggedIn(context.isAuthenticated);
+      return ordersModel.updateStatus(args.id, args.status);
+    },
+
+    deleteOrder: (_, args, context) => {
+      checkIfLoggedIn(context.isAuthenticated);
+      return ordersModel.deleteOrder(args.id);
+    },
   },
 };

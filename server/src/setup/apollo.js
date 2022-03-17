@@ -4,6 +4,8 @@ const { ApolloServer } = require('apollo-server-express');
 const { loadFilesSync } = require('@graphql-tools/load-files');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 
+const { PLAYGROUND } = require('../utils/config');
+
 function getSchema() {
   const typeDefs = loadFilesSync(join(__dirname, '../**/*.graphql'));
   const resolvers = loadFilesSync(join(__dirname, '../**/*.resolvers.js'));
@@ -12,8 +14,7 @@ function getSchema() {
 }
 
 function readContext({ req }) {
-  req.isAuthenticated() && console.log(req.user);
-  return { user: req.user };
+  return { id: req.user, isAuthenticated: req.isAuthenticated() };
 }
 
 function apolloServer() {
@@ -21,6 +22,8 @@ function apolloServer() {
     schema: getSchema(),
     context: readContext,
     cache: true,
+    debug: false,
+    //introspection: PLAYGROUND,
   });
 }
 

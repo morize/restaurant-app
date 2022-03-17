@@ -1,4 +1,5 @@
 const itemsModel = require('./items.model');
+const { throwErrorByUserRole } = require('../users/users.model');
 
 module.exports = {
   Query: {
@@ -11,18 +12,33 @@ module.exports = {
   },
 
   Mutation: {
-    addNewItem: async (_, args) =>
-      itemsModel.addNewItem(args.name, args.description, args.price, args.type),
+    addNewItem: async (_, args, context) => {
+      await throwErrorByUserRole(context.id);
 
-    updateItem: async (_, args) =>
-      itemsModel.updateItem(
+      return itemsModel.addNewItem(
+        args.name,
+        args.description,
+        args.price,
+        args.type
+      );
+    },
+
+    updateItem: async (_, args, context) => {
+      await throwErrorByUserRole(context.id);
+
+      return itemsModel.updateItem(
         args.id,
         args.name,
         args.description,
         args.price,
         args.type
-      ),
+      );
+    },
 
-    deleteItem: async (_, args) => itemsModel.deleteItem(args.id),
+    deleteItem: async (_, args) => {
+      await throwErrorByUserRole(context.id);
+
+      return itemsModel.deleteItem(args.id);
+    },
   },
 };

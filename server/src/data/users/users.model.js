@@ -55,7 +55,20 @@ async function deleteUser(id) {
 }
 
 async function getUserByGoogleId(googleId) {
-  return await users.findOne({ googleId }, { '__v': false });
+  return await users.findOne({ googleId }, { __v: false });
+}
+
+async function throwErrorByUserRole(id) {
+  const user = await users.findById(id);
+
+  if (!user) {
+    throw new Error('You are not logged in.');
+  }
+
+  if (user.role === 'guest')
+    throw new Error(
+      'Your request is not authorized. Only managers or admins can add or modify this field'
+    );
 }
 
 module.exports = {
@@ -65,4 +78,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getUserByGoogleId,
+  throwErrorByUserRole,
 };
