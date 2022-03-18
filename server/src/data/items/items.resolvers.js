@@ -5,6 +5,7 @@ const {
   createItem,
   updateItem,
   deleteItem,
+  populateItemsData,
 } = require('./items.model');
 const { checkIfCurrentUserIsAdmin } = require('../users/users.model');
 
@@ -43,6 +44,11 @@ module.exports = {
     deleteItem: async (_, args) => {
       await checkIfCurrentUserIsAdmin(currentUserId);
       return deleteItem(args.id);
+    },
+
+    populateItemsData: async (_, __, { currentUserId }) => {
+      await checkIfCurrentUserIsAdmin(currentUserId);
+      return await populateItemsData();
     },
   },
 };

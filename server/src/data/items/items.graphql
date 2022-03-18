@@ -21,6 +21,8 @@ type Mutation {
   ): Item
 
   deleteItem(id: ID!): Item
+
+  populateItemsData: [Item]
 }
 
 type Item {

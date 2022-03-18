@@ -1,4 +1,5 @@
 const items = require('./items.mongo');
+const { defaultItemsData } = require('./items.seeder');
 const {
   checkForValidId,
   checkIfItemExists,
@@ -59,6 +60,18 @@ async function deleteItem(itemId) {
   return itemToDelete;
 }
 
+async function populateItemsData() {
+  const itemsData = [];
+
+  for (let i = 0; i < defaultItemsData.length; i++) {
+    let { name, description, price, type } = defaultItemsData[i];
+    let item = await createItem(name, description, price, type);
+    itemsData.push(item);
+  }
+
+  return itemsData;
+}
+
 module.exports = {
   getItemById,
   getAllItems,
@@ -66,4 +79,5 @@ module.exports = {
   createItem,
   updateItem,
   deleteItem,
+  populateItemsData,
 };

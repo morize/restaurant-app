@@ -16,6 +16,7 @@ const itemsSchema = new Schema({
   type: {
     type: String,
     required: true,
+    enum: ['breakfast', 'meal', 'dessert', 'drink'],
   },
 });
 
