@@ -8,13 +8,17 @@ const Overview = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
+
   return (
     <div>
       {data &&
-        data.items.map(({ _id, name }) => (
+        data.getAllItems.map(({ _id, name, description, price, type }) => (
           <p key={_id}>
             id: {_id}
             name: {name}
+            description: {description}
+            price: {price}
+            type: {type}
           </p>
         ))}
       <a href={`${config.API_URL}/auth/google`}>Login</a>

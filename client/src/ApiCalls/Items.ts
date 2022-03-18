@@ -4,17 +4,23 @@ interface Item {
   __typename: 'item';
   _id: string;
   name: string;
+  description: string;
+  price: number;
+  type: string;
 }
 
 export interface ItemsData {
-  items: Item[];
+  getAllItems: Item[];
 }
 
 export const GET_ALL_ITEMS = gql`
   query GetAllItems {
-    items {
+    getAllItems {
       _id
       name
+      description
+      price
+      type
     }
   }
 `;
