@@ -4,7 +4,7 @@ import Overview from './Pages/Overview';
 
 const App = () => {
   return (
-    <div className="bg-start bg-cover h-screen">
+    <div className="bg-main bg-cover h-screen font-solway">
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/overview" element={<Overview />} />
