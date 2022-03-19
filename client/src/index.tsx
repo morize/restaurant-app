@@ -12,6 +12,8 @@ import {
 import App from './App';
 import { config } from './Utils/config';
 
+import './index.css';
+
 const httpLink = createHttpLink({
   uri: `${config.API_URL}/graphql`,
   credentials: 'include',
