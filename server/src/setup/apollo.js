@@ -13,8 +13,16 @@ function getSchema() {
   return makeExecutableSchema({ typeDefs, resolvers });
 }
 
-function readContext({ req }) {
-  return { currentUserId: req.user, isAuthenticated: req.isAuthenticated() };
+async function readContext({ req, res }) {
+  const userId = req.user;
+  const isAuthenticated = req.isAuthenticated();
+
+  if (isAuthenticated) {
+    res.setHeader('currentUserId', userId);
+    res.setHeader('isAuthenticated', isAuthenticated);
+  }
+
+  return { currentUserId: userId, isAuthenticated: isAuthenticated };
 }
 
 function apolloServer() {

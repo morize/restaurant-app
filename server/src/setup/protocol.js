@@ -8,6 +8,7 @@ function corsMiddleware() {
   const corsOptions = {
     origin: ['http://localhost:3001', 'https://studio.apollographql.com'],
     credentials: true,
+    exposedHeaders: ['currentUserId', 'isAuthenticated'],
   };
 
   return cors(corsOptions);
