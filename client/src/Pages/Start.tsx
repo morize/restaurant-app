@@ -41,7 +41,7 @@ const Start = () => {
               or you can login with your Google account as well!
             </p>
             <Input label="Email:" />
-            <Input label="Password:" />
+            <Input label="Password:" type="password" />
             <a className="block mt-[8px] mb-[40px] text-sm text-blue-700 underline">
               Forgot Password?
             </a>

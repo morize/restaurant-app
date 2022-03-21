@@ -6,7 +6,6 @@ import {
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
-  ApolloLink,
 } from '@apollo/client';
 
 import App from './App';
@@ -19,17 +18,8 @@ const httpLink = createHttpLink({
   credentials: 'include',
 });
 
-const afterwareLink = new ApolloLink((operation, forward) => {
-  return forward(operation).map((response) => {
-    const context = operation.getContext();
-    const authHeader = context.response.headers.get('currentUserId');
-    console.log(authHeader);
-    return response;
-  });
-});
-
 const apolloClient = new ApolloClient({
-  link: afterwareLink.concat(httpLink),
+  link: httpLink,
   cache: new InMemoryCache(),
   name: 'HotelCateringApp',
   credentials: 'include',
