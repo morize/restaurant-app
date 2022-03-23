@@ -1,8 +1,16 @@
+import { useLocation } from 'react-router-dom';
+
 import Button from '../Components/Button';
 import Input from '../Components/Input';
 import { config } from '../Utils/config';
 
 const Start = () => {
+  const { state: redirectMessage } = useLocation();
+
+  if (redirectMessage) {
+    // console.log(redirectMessage);
+  }
+
   return (
     <div className="flex items-center">
       <div className="inline-flex w-[900px] h-screen px-[120px] pt-[200px] bg-black bg-opacity-50">
@@ -59,6 +67,12 @@ const Start = () => {
             <a className="block mb-[40px] text-center text-blue-700 underline cursor-pointer">
               Make a new account!
             </a>
+
+            {redirectMessage && (
+              <p className="text-lg mb-[12px] text-center text-red-500 font-semibold">
+                {String(redirectMessage)}
+              </p>
+            )}
           </div>
         </div>
       </div>

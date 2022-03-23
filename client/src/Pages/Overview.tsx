@@ -6,9 +6,9 @@ import { config } from '../Utils/config';
 const Overview = () => {
   const { loading, error, data } = useQuery<ItemsData>(GET_ALL_ITEMS);
 
+  error && console.log(error.graphQLErrors[0].extensions.code);
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
+  if (error) return <p>Error</p>;
   return (
     <div>
       {data &&
