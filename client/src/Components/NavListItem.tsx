@@ -8,11 +8,11 @@ interface INavListItem extends LiHTMLAttributes<HTMLLIElement> {
 const NavListItem = ({ label, icon, ...rest }: INavListItem) => {
   return (
     <li
-      className="flex flex-col items-center justify-center w-[84px] cursor-pointer"
+      className="flex flex-col items-center justify-center w-20 cursor-pointer"
       {...rest}
     >
       {icon}
-      <p className="mt-[6px]">{label}</p>
+      <p className="mt-2 text-sm">{label}</p>
     </li>
   );
 };
