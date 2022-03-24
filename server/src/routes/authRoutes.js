@@ -18,7 +18,7 @@ authRoutes.get(
     failureRedirect: '/failed',
     successRedirect: PLAYGROUND
       ? 'https://studio.apollographql.com/sandbox/explorer'
-      : 'http://localhost:3001/overview',
+      : 'http://localhost:3001/cafeteria',
     session: true,
   })
 );
