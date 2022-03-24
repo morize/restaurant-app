@@ -1,10 +1,15 @@
+import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import { GET_ALL_ITEMS, GET_ITEMS_BY_TYPE, ItemsData } from '../ApiCalls/Items';
-import { useState } from 'react';
-import { config } from '../Utils/config';
+import { GET_ITEMS_BY_TYPE, ItemsData } from '../ApiCalls/Items';
 
 import ListItemButton from '../Components/ListItemButton';
+import { ICartItem } from '../Pages/Layout';
+
+export interface ICartItems {
+  addToCart: (cartItem: ICartItem) => void;
+}
 
 const Overview = () => {
   const [category, setCategory] = useState('breakfast');
@@ -12,6 +17,8 @@ const Overview = () => {
     variables: { type: category },
   });
   error && console.log(error.graphQLErrors[0].extensions.code);
+
+  const { addToCart } = useOutletContext<ICartItems>();
 
   if (error) return <p>Error</p>;
 
@@ -77,10 +84,21 @@ const Overview = () => {
                       <div className="flex flex-col w-[10rem] items-center justify-center ml-auto">
                         <span>{price}$</span>
                         <span className="my-4">⭐⭐⭐⭐⭐</span>
+
                         <div className="flex flex-row w-full gap-4">
-                          <button className="w-16 h-12 bg-[#8B3939]">
+                          <button
+                            className="w-16 h-12 bg-[#8B3939]"
+                            onClick={() => {
+                              addToCart({
+                                id: _id,
+                                name: name,
+                                price: price,
+                              });
+                            }}
+                          >
                             <p className="text-base">+</p>
                           </button>
+
                           <button className="w-28 h-12 bg-[#8B3939]">
                             <p className="text-xs"> More Info</p>
                           </button>

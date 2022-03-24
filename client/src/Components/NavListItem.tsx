@@ -5,14 +5,15 @@ interface INavListItem extends LiHTMLAttributes<HTMLLIElement> {
   icon: JSX.Element;
 }
 
-const NavListItem = ({ label, icon, ...rest }: INavListItem) => {
+const NavListItem = ({ label, icon, children, ...rest }: INavListItem) => {
   return (
     <li
-      className="flex flex-col items-center justify-center w-20 cursor-pointer"
+      className="relative flex flex-col items-center justify-center w-20 cursor-pointer"
       {...rest}
     >
       {icon}
       <p className="mt-2 text-sm">{label}</p>
+      {children}
     </li>
   );
 };

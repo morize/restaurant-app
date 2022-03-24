@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import NavListItem from '../Components/NavListItem';
@@ -9,7 +10,20 @@ import {
   LogoutIcon,
 } from '../Utils/Icons';
 
+export interface ICartItem {
+  id: String;
+  name: String;
+  price: Number;
+}
+
 const Layout = () => {
+  const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+
+  const addToCart = (newCartItem: ICartItem) => {
+    const newArray = [...cartItems, newCartItem];
+    setCartItems(newArray);
+  };
+  
   return (
     <>
       <nav className="sticky top-0 flex items-center w-full h-28 px-44 text-white bg-[#402200] z-10">
@@ -20,14 +34,17 @@ const Layout = () => {
         </ul>
 
         <ul className="flex ml-auto gap-14">
-          <NavListItem label="Cart" icon={<CartIcon />} />
+          <NavListItem label="Cart" icon={<CartIcon />}>
+            <span className="flex items-center justify-center absolute right-0 w-8 h-8 rounded-full bg-red-700">{cartItems.length}</span>
+          </NavListItem>
+
           <NavListItem label="Logout" icon={<LogoutIcon />} />
         </ul>
       </nav>
 
       <main className="flex w-full">
         <div className="w-11/12 h-[calc(100vh-160px)] my-6 mx-auto py-16 px-20 bg-black bg-opacity-70 overflow-y-auto">
-          <Outlet />
+          <Outlet context={{ addToCart }} />
         </div>
       </main>
     </>
