@@ -1,6 +1,8 @@
 type Query {
   getItem(id: ID!): Item
   getAllItems: [Item]
+
+  getItemsByType(type: String!): [Item]
   getItemsByPrice(min: Float!, max: Float!): [Item]
 }
 

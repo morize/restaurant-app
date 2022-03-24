@@ -19,6 +19,10 @@ async function getAllItems() {
   return await items.find({});
 }
 
+async function getItemsByType(type) {
+  return await items.find({ type: type });
+}
+
 async function getItemsByPrice(min, max) {
   return await items.find({ price: { $gte: min, $lte: max } });
 }
@@ -75,6 +79,7 @@ async function populateItemsData() {
 module.exports = {
   getItemById,
   getAllItems,
+  getItemsByType,
   getItemsByPrice,
   createItem,
   updateItem,

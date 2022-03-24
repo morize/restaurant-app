@@ -1,6 +1,7 @@
 const {
   getItemById,
   getAllItems,
+  getItemsByType,
   getItemsByPrice,
   createItem,
   updateItem,
@@ -14,6 +15,8 @@ module.exports = {
     getItem: async (_, args) => await getItemById(args.id),
 
     getAllItems: async () => await getAllItems(),
+
+    getItemsByType: async (_, args) => await getItemsByType(args.type),
 
     getItemsByPrice: async (_, args) =>
       await getItemsByPrice(args.min, args.max),
