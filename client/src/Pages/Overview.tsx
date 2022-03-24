@@ -1,12 +1,14 @@
 import { useQuery } from '@apollo/client';
 
 import { GET_ALL_ITEMS, ItemsData } from '../ApiCalls/Items';
+import { useState } from 'react';
 import { config } from '../Utils/config';
 
 import ListItemButton from '../Components/ListItemButton';
 
 const Overview = () => {
   const { loading, error, data } = useQuery<ItemsData>(GET_ALL_ITEMS);
+  const [category, setCategory] = useState('breakfast');
 
   error && console.log(error.graphQLErrors[0].extensions.code);
 
@@ -22,17 +24,38 @@ const Overview = () => {
         <div className="mt-10 m-auto">
           <p className="mb-6">Categories</p>
           <ul className="flex flex-col gap-y-8 justify-center">
-            <ListItemButton label="Breakfast" active={true} />
-            <ListItemButton label="Dinner" />
-            <ListItemButton label="Beverages" />
-            <ListItemButton label="Desserts" />
+            <ListItemButton
+              label="Breakfast"
+              active={category === 'breakfast'}
+              onClick={() =>
+                category !== 'breakfast' && setCategory('breakfast')
+              }
+            />
+            <ListItemButton
+              label="Dinner"
+              active={category === 'dinner'}
+              onClick={() => category !== 'dinner' && setCategory('dinner')}
+            />
+            <ListItemButton
+              label="Beverages"
+              active={category === 'beverages'}
+              onClick={() =>
+                category !== 'beverages' && setCategory('beverages')
+              }
+            />
+            <ListItemButton
+              label="Desserts"
+              active={category === 'dessert'}
+              onClick={() => category !== 'dessert' && setCategory('dessert')}
+            />
           </ul>
         </div>
       </div>
 
       <div className="inline-flex flex-col w-3/4 min-h-full px-24 py-16 bg-[#261000] ">
         <p className="w-full mb-8">
-          {data ? data.getAllItems.length : 0} results for Breakfast
+          {data ? data.getAllItems.length : 0} results for{' '}
+          <span className="capitalize">{category}</span>
         </p>
         <ul>
           {data &&
@@ -54,10 +77,10 @@ const Overview = () => {
                   <span>{price}$</span>
                   <span className="my-4">⭐⭐⭐⭐⭐</span>
                   <div className="flex flex-row w-full gap-4">
-                    <button className="w-16 h-14 bg-neutral-900">
+                    <button className="w-16 h-14 bg-[#8B3939]">
                       <p className="text-xl">+</p>
                     </button>
-                    <button className="w-32 h-14 bg-neutral-900">
+                    <button className="w-32 h-14 bg-[#8B3939]">
                       <p className="text-sm"> More Info</p>
                     </button>
                   </div>
