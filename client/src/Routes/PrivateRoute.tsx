@@ -1,27 +1,25 @@
 import { useQuery } from '@apollo/client';
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
 
-import { ICartItems } from '../Pages/Overview';
+import { ICartItems } from '../Pages/Layout';
 import { GET_CURRENT_USER, UserData } from '../ApiCalls/User';
 
 const PrivateRoute = () => {
-  const { loading, error } = useQuery<UserData>(GET_CURRENT_USER);
+  const {
+    data: userData,
+    loading,
+    error,
+  } = useQuery<UserData>(GET_CURRENT_USER);
   const { cartItems, addToCart } = useOutletContext<ICartItems>();
 
-  if (!loading && !error) {
-    // if (error.graphQLErrors[0].extensions.code === 'UNAUTHENTICATED') {
-    //   return <Navigate to="/" />;
-    // }
-  }
-
-  return !loading && error ? (
+  return !userData && !loading && error ? (
     <Navigate
       to="/"
       state="Please login before accessing this page"
       replace={true}
     />
   ) : (
-    <Outlet context={{ cartItems, addToCart }} />
+    <Outlet context={{ userData, cartItems, addToCart }} />
   );
 };
 

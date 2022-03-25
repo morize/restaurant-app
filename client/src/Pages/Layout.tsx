@@ -10,12 +10,19 @@ import {
   LogoutIcon,
 } from '../Utils/Icons';
 import { config } from '../Utils/config';
+import { UserData } from '../ApiCalls/User';
 
 export interface ICartItem {
   id: string;
   name: string;
   price: number;
   quantity: number;
+}
+
+export interface ICartItems {
+  userData: UserData;
+  cartItems: [ICartItem];
+  addToCart: (cartItem: ICartItem) => void;
 }
 
 const Layout = () => {

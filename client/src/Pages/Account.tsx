@@ -1,22 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 import Button from '../Components/Button';
-import { GET_CURRENT_USER, UserData } from '../ApiCalls/User';
+import { ICartItems } from '../Pages/Layout';
 
 const Account = () => {
   const navigate = useNavigate();
-  const { data, loading, error } = useQuery<UserData>(GET_CURRENT_USER);
-
+  const { userData } = useOutletContext<ICartItems>();
   return (
     <div>
-      {data && (
+      {userData && (
         <div className="text-white">
-          <p>Username: {data.getCurrentUser.userName}</p>
-          <p>Role: {data.getCurrentUser.role}</p>
+          <p>Username: {userData.getCurrentUser.userName}</p>
+          <p>Role: {userData.getCurrentUser.role}</p>
         </div>
       )}
-      {data?.getCurrentUser.role === 'admin' && (
+      {userData?.getCurrentUser.role === 'admin' && (
         <Button
           label="Go to admin portal"
           variant="primary"

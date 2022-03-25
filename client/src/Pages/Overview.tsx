@@ -6,12 +6,7 @@ import { GET_ITEMS_BY_TYPE, ItemsData } from '../ApiCalls/Items';
 
 import MenuItem from '../Components/MenuItem';
 import ListItemButton from '../Components/ListItemButton';
-import { ICartItem } from '../Pages/Layout';
-
-export interface ICartItems {
-  cartItems: [ICartItem];
-  addToCart: (cartItem: ICartItem) => void;
-}
+import { ICartItems } from '../Pages/Layout';
 
 const Overview = () => {
   const [category, setCategory] = useState('breakfast');
