@@ -4,6 +4,7 @@ import PrivateRoute from './PrivateRoute';
 import Layout from '../Pages/Layout';
 import Start from '../Pages/Start';
 import Overview from '../Pages/Overview';
+import Checkout from '../Pages/Checkout';
 
 const AppRoutes = () => (
   <Routes>
@@ -12,6 +13,7 @@ const AppRoutes = () => (
     <Route path="/" element={<Layout />}>
       <Route path="/cafeteria" element={<PrivateRoute />}>
         <Route path="/cafeteria" element={<Overview />} />
+        <Route path="/cafeteria/checkout" element={<Checkout />} />
       </Route>
     </Route>
   </Routes>
