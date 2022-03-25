@@ -33,8 +33,8 @@ const Layout = () => {
     <>
       <Navigation cartItems={cartItems} />
 
-      <main className="flex w-full">
-        <div className="w-11/12 h-[calc(100vh-160px)] my-6 mx-auto py-16 px-20 bg-black bg-opacity-70 overflow-y-auto">
+      <main>
+        <div className="w-11/12 h-[800px] my-6 mx-auto py-16 px-20 bg-black bg-opacity-70 overflow-auto">
           <Outlet context={{ cartItems, addToCart }} />
         </div>
       </main>

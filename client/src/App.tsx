@@ -1,7 +1,7 @@
 import Routes from './Routes/Routes';
 
 const App = () => (
-  <div className="bg-main bg-cover bg-fixed h-auto font-solway">
+  <div className="h-screen bg-main bg-no-repeat bg-cover font-solway overflow-auto">
     <Routes />
   </div>
 );
