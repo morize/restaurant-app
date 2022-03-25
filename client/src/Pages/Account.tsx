@@ -1,7 +1,7 @@
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
 import Button from '../Components/Button';
-import { ICartItems } from '../Pages/Layout';
+import { ICartItems } from '../Pages/Navigation';
 
 const Account = () => {
   const navigate = useNavigate();

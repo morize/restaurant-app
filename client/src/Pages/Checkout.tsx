@@ -4,24 +4,23 @@ import { useMutation } from '@apollo/client';
 
 import Button from '../Components/Button';
 import { CREATE_ORDER, OrdersData } from '../ApiCalls/Orders';
-import { ICartItem } from '../Pages/Layout';
+import { ICartItem } from '../Pages/Navigation';
 
 const Checkout = () => {
   const location = useLocation();
   const cartItems = location.state as ICartItem[];
 
-  const [createOrder, { data, loading, error }] =
-    useMutation<OrdersData>(CREATE_ORDER);
+  const [createOrder] = useMutation<OrdersData>(CREATE_ORDER);
 
   const [extraInfo, setExtraInfo] = useState('');
 
   const getTotalPrice = () => {
     let totalPrice = 0;
-    {
-      cartItems.map((cartItem) => {
-        totalPrice += cartItem.quantity * cartItem.price;
-      });
-    }
+
+    cartItems.map(
+      (cartItem) => (totalPrice += cartItem.quantity * cartItem.price)
+    );
+
     return totalPrice;
   };
 

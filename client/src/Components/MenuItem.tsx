@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ICartItem } from '../Pages/Layout';
+import { ICartItem } from '../Pages/Navigation';
 
 interface IMenuItem {
   id: string;
@@ -23,7 +23,7 @@ const MenuItem = ({
   return (
     <li className="flex w-full h-56 mb-12 py-8 px-12 bg-[#412929]">
       <figure className="min-w-[12rem] h-full bg-white">
-        <img></img>
+        <img alt="placeholder"/>
       </figure>
 
       <div className="flex flex-col mx-8">

@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
-import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-import { ICartItems } from '../Pages/Layout';
 import { GET_CURRENT_USER, UserData } from '../ApiCalls/User';
 
 const PrivateRoute = () => {
@@ -10,7 +9,6 @@ const PrivateRoute = () => {
     loading,
     error,
   } = useQuery<UserData>(GET_CURRENT_USER);
-  const { cartItems, addToCart } = useOutletContext<ICartItems>();
 
   return !userData && !loading && error ? (
     <Navigate
@@ -19,7 +17,7 @@ const PrivateRoute = () => {
       replace={true}
     />
   ) : (
-    <Outlet context={{ userData, cartItems, addToCart }} />
+    <Outlet />
   );
 };
 

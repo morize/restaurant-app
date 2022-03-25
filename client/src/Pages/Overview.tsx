@@ -6,12 +6,12 @@ import { GET_ITEMS_BY_TYPE, ItemsData } from '../ApiCalls/Items';
 
 import MenuItem from '../Components/MenuItem';
 import ListItemButton from '../Components/ListItemButton';
-import { ICartItems } from '../Pages/Layout';
+import { ICartItems } from './Navigation';
 
 const Overview = () => {
   const [category, setCategory] = useState('breakfast');
 
-  const { loading, error, data } = useQuery<ItemsData>(GET_ITEMS_BY_TYPE, {
+  const { loading, data } = useQuery<ItemsData>(GET_ITEMS_BY_TYPE, {
     variables: { type: category },
   });
 
