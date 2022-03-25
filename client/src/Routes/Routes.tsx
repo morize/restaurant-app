@@ -9,6 +9,9 @@ import Checkout from '../Pages/Checkout';
 import Account from '../Pages/Account';
 import Admin from '../Pages/Admin';
 
+import Items from '../Pages/Admin/Items';
+import UpdateItem from '../Pages/Admin/UpdateItem';
+
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Start />} />
@@ -24,7 +27,10 @@ const AppRoutes = () => (
 
     <Route path="/" element={<PrivateRoute admin={true} />}>
       <Route path="/" element={<Layout />}>
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Admin />}>
+          <Route path="/admin/items" element={<Items />} />
+          <Route path="/admin/items/:id" element={<UpdateItem />} />
+        </Route>
       </Route>
     </Route>
   </Routes>
