@@ -9,7 +9,7 @@ const Account = () => {
   const { data: userData, loading } = useQuery<UserData>(GET_CURRENT_USER);
 
   return (
-    <div>
+    <>
       {userData && !loading && (
         <div className="text-white">
           <p>Username: {userData.getCurrentUser.userName}</p>
@@ -22,11 +22,11 @@ const Account = () => {
           variant="primary"
           onClick={(e) => {
             e.preventDefault();
-            navigate('/admin', { state: userData });
+            navigate('/admin');
           }}
         />
       )}
-    </div>
+    </>
   );
 };
 

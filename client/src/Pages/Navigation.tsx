@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
 import NavListItem from '../Components/NavListItem';
-import { UserData } from '../ApiCalls/User';
 import {
   MenuIcon,
   ContactIcon,

@@ -12,6 +12,7 @@ export interface Item {
 export interface ItemsData {
   getAllItems: Item[];
   getItemsByType: Item[];
+  deleteItem: Item;
 }
 
 export const GET_ALL_ITEMS = gql`
@@ -34,6 +35,35 @@ export const GET_ITEMS_BY_TYPE = gql`
       description
       price
       type
+    }
+  }
+`;
+
+export const CREATE_ITEM = gql`
+  mutation CreateItem(
+    $name: String!
+    $description: String
+    $price: number
+    $type: String!
+  ) {
+    createItem(
+      name: $name
+      description: $description
+      price: $price
+      type: $type
+    ) {
+      _id
+      name
+      price
+      type
+    }
+  }
+`;
+
+export const DELETE_ITEM = gql`
+  mutation DeleteItem($id: ID!) {
+    deleteItem(id: $id) {
+      name
     }
   }
 `;
