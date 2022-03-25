@@ -19,6 +19,11 @@ const AppRoutes = () => (
         <Route path="/cafeteria/checkout" element={<Checkout />} />
 
         <Route path="/account" element={<Account />} />
+      </Route>
+    </Route>
+
+    <Route path="/" element={<PrivateRoute admin={true} />}>
+      <Route path="/" element={<Layout />}>
         <Route path="/admin" element={<Admin />} />
       </Route>
     </Route>

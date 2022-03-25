@@ -3,12 +3,28 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { GET_CURRENT_USER, UserData } from '../ApiCalls/User';
 
-const PrivateRoute = () => {
+interface IPrivateRoute {
+  admin?: boolean;
+}
+
+const PrivateRoute = ({ admin }: IPrivateRoute) => {
   const {
     data: userData,
     loading,
     error,
   } = useQuery<UserData>(GET_CURRENT_USER);
+
+  if (!loading && admin && userData) {
+    return userData.getCurrentUser.role !== 'admin' ? (
+      <Navigate
+        to="/account"
+        state="You are not authorized to enter this page"
+        replace={true}
+      />
+    ) : (
+      <Outlet />
+    );
+  }
 
   return !userData && !loading && error ? (
     <Navigate
