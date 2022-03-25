@@ -13,14 +13,12 @@ export interface ICartItems {
 
 const Overview = () => {
   const [category, setCategory] = useState('breakfast');
+
   const { loading, error, data } = useQuery<ItemsData>(GET_ITEMS_BY_TYPE, {
     variables: { type: category },
   });
-  error && console.log(error.graphQLErrors[0].extensions.code);
-
+  
   const { addToCart } = useOutletContext<ICartItems>();
-
-  if (error) return <p>Error</p>;
 
   return (
     <div className="w-full h-auto text-white text-sm">
