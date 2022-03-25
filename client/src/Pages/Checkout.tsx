@@ -13,7 +13,7 @@ const Checkout = () => {
   const [createOrder, { data, loading, error }] =
     useMutation<OrdersData>(CREATE_ORDER);
 
-  const [extraInfo, setExtraInfo] = useState('asdasd');
+  const [extraInfo, setExtraInfo] = useState('');
 
   const getTotalPrice = () => {
     let totalPrice = 0;

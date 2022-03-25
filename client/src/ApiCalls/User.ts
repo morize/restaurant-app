@@ -9,7 +9,6 @@ interface User {
 }
 
 export interface UserData {
-  getAllItems: User[];
   getCurrentUser: User;
 }
 
