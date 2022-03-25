@@ -4,10 +4,12 @@ import { useQuery } from '@apollo/client';
 
 import { GET_ITEMS_BY_TYPE, ItemsData } from '../ApiCalls/Items';
 
+import MenuItem from '../Components/MenuItem';
 import ListItemButton from '../Components/ListItemButton';
 import { ICartItem } from '../Pages/Layout';
 
 export interface ICartItems {
+  cartItems: [ICartItem];
   addToCart: (cartItem: ICartItem) => void;
 }
 
@@ -17,8 +19,8 @@ const Overview = () => {
   const { loading, error, data } = useQuery<ItemsData>(GET_ITEMS_BY_TYPE, {
     variables: { type: category },
   });
-  
-  const { addToCart } = useOutletContext<ICartItems>();
+
+  const { cartItems, addToCart } = useOutletContext<ICartItems>();
 
   return (
     <div className="w-full h-auto text-white text-sm">
@@ -64,47 +66,21 @@ const Overview = () => {
             </p>
             <ul>
               {data &&
-                data.getItemsByType.map(
-                  ({ _id, name, description, price, type }) => (
-                    <li
-                      key={_id}
-                      className="flex w-full h-56 mb-12 py-8 px-12 bg-[#412929]"
-                    >
-                      <figure className="min-w-[12rem] h-full bg-white">
-                        <img></img>
-                      </figure>
-
-                      <div className="flex flex-col mx-8">
-                        <p className="text-2xl mb-6">{name}</p>
-                        <p className="text-sm">{description}</p>
-                      </div>
-
-                      <div className="flex flex-col w-[10rem] items-center justify-center ml-auto">
-                        <span>{price}$</span>
-                        <span className="my-4">⭐⭐⭐⭐⭐</span>
-
-                        <div className="flex flex-row w-full gap-4">
-                          <button
-                            className="w-16 h-12 bg-[#8B3939]"
-                            onClick={() => {
-                              addToCart({
-                                id: _id,
-                                name: name,
-                                price: price,
-                              });
-                            }}
-                          >
-                            <p className="text-base">+</p>
-                          </button>
-
-                          <button className="w-28 h-12 bg-[#8B3939]">
-                            <p className="text-xs"> More Info</p>
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  )
-                )}
+                data.getItemsByType.map(({ _id, name, description, price }) => (
+                  <MenuItem
+                    id={_id}
+                    name={name}
+                    description={description}
+                    price={price}
+                    addToCart={addToCart}
+                    key={_id}
+                    initialQuantity={
+                      // do with redux instead, this loops through your cart for each fetched card item
+                      cartItems.find((cartItem) => cartItem.id === _id)
+                        ?.quantity
+                    }
+                  />
+                ))}
             </ul>
           </>
         ) : (

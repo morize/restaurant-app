@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
@@ -12,31 +13,64 @@ const Checkout = () => {
   const [createOrder, { data, loading, error }] =
     useMutation<OrdersData>(CREATE_ORDER);
 
+  const [extraInfo, setExtraInfo] = useState('asdasd');
+
+  const getTotalPrice = () => {
+    let totalPrice = 0;
+    {
+      cartItems.map((cartItem) => {
+        totalPrice += cartItem.quantity * cartItem.price;
+      });
+    }
+    return totalPrice;
+  };
+
   return (
-    <div className="flex flex-col text-white">
+    // should be table
+    <div className="flex flex-col text-white ">
+      <div className="flex w-full justify-between mb-4 ">
+        <p>Name</p>
+        <p>
+          <span className="mr-10">Quantity</span>Price
+        </p>
+      </div>
+
       {cartItems &&
         cartItems.map((cartItem) => (
-          <div key={cartItem.id}>
-            <span>{cartItem.name}</span>
-            <span>{cartItem.price}</span>
+          <div className="flex w-full justify-between" key={cartItem.id}>
+            <p>{cartItem.name}</p>
+            <p>
+              <span className="mr-16">{cartItem.quantity}</span>
+              {cartItem.price}$
+            </p>
           </div>
         ))}
-      <label>Extra Info</label>
-      <textarea />
+
+      <div className="flex w-full justify-between mt-4 text-xl">
+        <p>Total</p>
+        <p>{getTotalPrice()}$</p>
+      </div>
+
+      <label className="mt-8">Extra Info</label>
+      <textarea
+        className="text-black"
+        value={extraInfo}
+        onChange={(e) => setExtraInfo(e.target.value)}
+      />
+
       <Button
         type="submit"
         label="Proceed to check out"
         variant="secondary"
         onClick={(e) => {
           e.preventDefault();
+
           const itemsToAdd = cartItems.map((cartItem) => {
-            return { itemId: cartItem.id, quantity: 3 };
+            return { itemId: cartItem.id, quantity: cartItem.quantity };
           });
 
-          console.log(itemsToAdd);
-
           createOrder({
-            variables: { orderItems: itemsToAdd, extraInfo: 'yo' },
+            variables: { orderItems: itemsToAdd, extraInfo: extraInfo },
           });
         }}
       />

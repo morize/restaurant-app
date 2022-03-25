@@ -13,8 +13,9 @@ import { config } from '../Utils/config';
 
 export interface ICartItem {
   id: string;
-  name: String;
-  price: Number;
+  name: string;
+  price: number;
+  quantity: number;
 }
 
 const Layout = () => {
@@ -22,7 +23,25 @@ const Layout = () => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
 
   const addToCart = (newCartItem: ICartItem) => {
-    const newArray = [...cartItems, newCartItem];
+    const newArray = [...cartItems];
+    if (cartItems.length >= 1) {
+      for (let i = 0; i < cartItems.length; i++) {
+        if (cartItems[i].id === newCartItem.id) {
+          if (newCartItem.quantity === 0) {
+            newArray.splice(i, 1);
+          } else {
+            newArray[i] = newCartItem;
+          }
+          setCartItems(newArray);
+          return;
+        }
+      }
+      newArray.push(newCartItem);
+      setCartItems(newArray);
+      return;
+    }
+
+    newArray.push(newCartItem);
     setCartItems(newArray);
   };
 
@@ -51,10 +70,11 @@ const Layout = () => {
           <NavListItem
             label="Cart"
             icon={<CartIcon />}
-            onClick={() =>
+            onClick={(e) => {
+              e.preventDefault();
               cartItems.length !== 0 &&
-              navigate('/cafeteria/checkout', { state: cartItems })
-            }
+                navigate('/cafeteria/checkout', { state: cartItems });
+            }}
           >
             <span className="flex items-center justify-center absolute right-0 w-8 h-8 rounded-full bg-red-700">
               {cartItems.length}
@@ -73,7 +93,7 @@ const Layout = () => {
 
       <main className="flex w-full">
         <div className="w-11/12 h-[calc(100vh-160px)] my-6 mx-auto py-16 px-20 bg-black bg-opacity-70 overflow-y-auto">
-          <Outlet context={{ addToCart }} />
+          <Outlet context={{ cartItems, addToCart }} />
         </div>
       </main>
     </>

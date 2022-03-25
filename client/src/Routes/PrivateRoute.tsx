@@ -6,7 +6,7 @@ import { GET_CURRENT_USER, UserData } from '../ApiCalls/User';
 
 const PrivateRoute = () => {
   const { loading, error } = useQuery<UserData>(GET_CURRENT_USER);
-  const { addToCart } = useOutletContext<ICartItems>();
+  const { cartItems, addToCart } = useOutletContext<ICartItems>();
 
   if (!loading && !error) {
     // if (error.graphQLErrors[0].extensions.code === 'UNAUTHENTICATED') {
@@ -21,7 +21,7 @@ const PrivateRoute = () => {
       replace={true}
     />
   ) : (
-    <Outlet context={{ addToCart }} />
+    <Outlet context={{ cartItems, addToCart }} />
   );
 };
 
