@@ -44,7 +44,7 @@ module.exports = {
       );
     },
 
-    deleteItem: async (_, args) => {
+    deleteItem: async (_, args, { currentUserId }) => {
       await checkIfCurrentUserIsAdmin(currentUserId);
       return deleteItem(args.id);
     },
