@@ -1,11 +1,18 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { GET_CURRENT_USER, UserData } from '../ApiCalls/User';
 
 import Button from '../Components/Button';
 import { ICartItems } from '../Pages/Navigation';
 
 const Account = () => {
   const navigate = useNavigate();
-  const { userData } = useOutletContext<ICartItems>();
+  const {
+    data: userData,
+    loading,
+    error,
+  } = useQuery<UserData>(GET_CURRENT_USER);
+
   return (
     <div>
       {userData && (

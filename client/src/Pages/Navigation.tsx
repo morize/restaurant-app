@@ -19,7 +19,6 @@ export interface ICartItem {
 }
 
 export interface ICartItems {
-  userData: UserData;
   cartItems: [ICartItem];
   addToCart: (cartItem: ICartItem) => void;
 }
