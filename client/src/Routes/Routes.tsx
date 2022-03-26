@@ -10,7 +10,7 @@ import Account from '../Pages/Account';
 import Admin from '../Pages/Admin';
 
 import Items from '../Pages/Admin/Items';
-import UpdateItem from '../Pages/Admin/UpdateItem';
+import EditItem from '../Pages/Admin/EditItem';
 
 const AppRoutes = () => (
   <Routes>
@@ -29,7 +29,7 @@ const AppRoutes = () => (
       <Route path="/" element={<Layout />}>
         <Route path="/admin" element={<Admin />}>
           <Route path="/admin/items" element={<Items />} />
-          <Route path="/admin/items/:id" element={<UpdateItem />} />
+          <Route path="/admin/items/:id" element={<EditItem />} />
         </Route>
       </Route>
     </Route>

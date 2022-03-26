@@ -16,32 +16,23 @@ const Admin = () => {
           <ul className="flex flex-col gap-y-8 justify-center">
             <ListItemButton
               label="Items"
-              active={page === 'items'}
-              onClick={(e) => {
-                if (page !== 'items') {
-                  setPage('items');
-                  navigate('items');
-                }
+              onClick={() => {
+                setPage('items');
+                navigate('items');
               }}
             />
             <ListItemButton
               label="Orders"
-              active={page === 'orders'}
-              onClick={(e) => {
-                if (page !== 'orders') {
-                  setPage('orders');
-                  navigate('orders');
-                }
+              onClick={() => {
+                setPage('orders');
+                navigate('orders');
               }}
             />
             <ListItemButton
               label="Users"
-              active={page === 'users'}
-              onClick={(e) => {
-                if (page !== 'users') {
-                  setPage('users');
-                  navigate('users');
-                }
+              onClick={() => {
+                setPage('users');
+                navigate('users');
               }}
             />
           </ul>
