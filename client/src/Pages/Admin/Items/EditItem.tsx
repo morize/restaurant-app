@@ -13,7 +13,7 @@ import TextArea from '../../../Components/TextArea';
 import Button from '../../../Components/Button';
 
 const EditItem = () => {
-  let { id: itemId } = useParams();
+  const { id: itemId } = useParams();
 
   const { loading, data } = useQuery<ItemsData>(GET_ITEM_BY_ID, {
     variables: { id: itemId },

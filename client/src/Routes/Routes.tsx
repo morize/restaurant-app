@@ -7,11 +7,13 @@ import Start from '../Pages/Start';
 import Overview from '../Pages/Overview';
 import Checkout from '../Pages/Checkout';
 import Account from '../Pages/Account';
-import Admin from '../Pages/Admin';
 
+import Admin from '../Pages/Admin';
 import Items from '../Pages/Admin/Items';
 import EditItem from '../Pages/Admin/Items/EditItem';
 import CreateItem from '../Pages/Admin/Items/CreateItem';
+import Orders from '../Pages/Admin/Orders';
+import ViewOrder from '../Pages/Admin/Orders/ViewOrder';
 
 const AppRoutes = () => (
   <Routes>
@@ -32,6 +34,9 @@ const AppRoutes = () => (
           <Route path="/admin/items" element={<Items />} />
           <Route path="/admin/items/new" element={<CreateItem />} />
           <Route path="/admin/items/:id" element={<EditItem />} />
+
+          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/orders/:id" element={<ViewOrder />} />
         </Route>
       </Route>
     </Route>
