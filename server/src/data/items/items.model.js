@@ -36,11 +36,11 @@ async function createItem(name, description, price, type) {
   });
 }
 
-async function updateItem(itemId, name, description, price, type) {
+async function updateItem(id, name, description, price, type) {
   checkForValidId(id);
 
   const updatedItem = await items.findOneAndUpdate(
-    { _id: itemId },
+    { _id: id },
     {
       name,
       description,
