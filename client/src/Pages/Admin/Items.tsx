@@ -9,8 +9,10 @@ import {
 } from '../../ApiCalls/Items';
 
 const Items = () => {
-  const [deleteItem] = useMutation<Item>(DELETE_ITEM);
   const { loading, data } = useQuery<ItemsData>(GET_ALL_ITEMS);
+  const [deleteItem] = useMutation<Item>(DELETE_ITEM, {
+    refetchQueries: [{ query: GET_ALL_ITEMS }],
+  });
   const navigate = useNavigate();
 
   return (
