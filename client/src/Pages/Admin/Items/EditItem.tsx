@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
@@ -5,18 +6,16 @@ import {
   GET_ITEM_BY_ID,
   UPDATE_ITEM,
   ItemsData,
-  Item,
-} from '../../ApiCalls/Items';
+} from '../../../ApiCalls/Items';
 
-import Input from '../../Components/Input';
-import TextArea from '../../Components/TextArea';
-import Button from '../../Components/Button';
-import { useEffect, useState } from 'react';
+import Input from '../../../Components/Input';
+import TextArea from '../../../Components/TextArea';
+import Button from '../../../Components/Button';
 
 const EditItem = () => {
   let { id: itemId } = useParams();
 
-  const { loading, data, error } = useQuery<ItemsData>(GET_ITEM_BY_ID, {
+  const { loading, data } = useQuery<ItemsData>(GET_ITEM_BY_ID, {
     variables: { id: itemId },
   });
   const [updateItem] = useMutation<ItemsData>(UPDATE_ITEM);
@@ -92,7 +91,7 @@ const EditItem = () => {
             </select>
           </div>
 
-          <Button type="submit" label="Submit" variant='primary' />
+          <Button type="submit" label="Submit" variant="primary" />
         </form>
       )}
     </div>

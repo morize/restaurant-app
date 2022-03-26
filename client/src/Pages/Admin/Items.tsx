@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 
+import Button from '../../Components/Button';
 import {
   GET_ALL_ITEMS,
   DELETE_ITEM,
@@ -60,6 +61,12 @@ const Items = () => {
             ))}
         </tbody>
       </table>
+
+      <Button
+        label="Add New Item"
+        variant="primary"
+        onClick={() => navigate('/admin/items/new')}
+      />
     </div>
   );
 };

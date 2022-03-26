@@ -56,7 +56,7 @@ export const CREATE_ITEM = gql`
   mutation CreateItem(
     $name: String!
     $description: String
-    $price: number
+    $price: Float!
     $type: String!
   ) {
     createItem(
@@ -66,10 +66,6 @@ export const CREATE_ITEM = gql`
       type: $type
     ) {
       _id
-      name
-      description
-      price
-      type
     }
   }
 `;
