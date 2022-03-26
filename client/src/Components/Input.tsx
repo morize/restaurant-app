@@ -6,10 +6,10 @@ interface IInput extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({ label, ...rest }: IInput) => {
   return (
-    <div className="mb-[24px] last-of-type:mb-[0]">
+    <div className="mb-[24px] last-of-type:mb-[0] ">
       <label>{label}</label>
       <input
-        className="block w-full h-[40px] p-2 border-[1px] border-slate-600 rounded-sm"
+        className="block w-full h-[40px] py-2 px-3 border-[1px] text-black border-slate-600 rounded-sm"
         {...rest}
       />
     </div>

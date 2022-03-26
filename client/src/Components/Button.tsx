@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: String;
-  variant: 'primary' | 'secondary' | 'google';
+  variant?: 'primary' | 'secondary' | 'google';
 }
 
 const getColorFromVariant = (variant: string) => {
@@ -19,7 +19,7 @@ const getColorFromVariant = (variant: string) => {
 };
 
 const Button = ({ label, variant, ...rest }: IButton) => {
-  const color = getColorFromVariant(variant);
+  const color = variant && getColorFromVariant(variant);
 
   return (
     <button
