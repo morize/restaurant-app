@@ -2,13 +2,14 @@ import { gql } from '@apollo/client';
 
 interface User {
   __typename: 'user';
-  _id: String;
-  userName: String;
-  googleId: String;
-  role: String;
+  _id: string;
+  userName: string;
+  googleId: string;
+  role: string;
 }
 
 export interface UserData {
+  getAllUsers: User[];
   getCurrentUser: User;
 }
 

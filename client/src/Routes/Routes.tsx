@@ -14,6 +14,7 @@ import EditItem from '../Pages/Admin/Items/EditItem';
 import CreateItem from '../Pages/Admin/Items/CreateItem';
 import Orders from '../Pages/Admin/Orders';
 import ViewOrder from '../Pages/Admin/Orders/ViewOrder';
+import Users from '../Pages/Admin/Users';
 
 const AppRoutes = () => (
   <Routes>
@@ -37,6 +38,9 @@ const AppRoutes = () => (
 
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/orders/:id" element={<ViewOrder />} />
+
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/users/:id" element={<ViewOrder />} />
         </Route>
       </Route>
     </Route>
