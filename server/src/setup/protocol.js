@@ -5,13 +5,14 @@ const { createServer } = require('https');
 const { ENVIRONMENT, PORT_PROD, PORT_DEV } = require('../utils/config');
 
 function corsMiddleware() {
-  const corsOptions = {
-    origin: ['http://localhost:3001', 'https://studio.apollographql.com'],
+  return cors({
+    origin: [
+      'http://localhost:3000',
+      'https://studio.apollographql.com',
+      'https://localhost',
+    ],
     credentials: true,
-    exposedHeaders: ['currentUserId', 'isAuthenticated'],
-  };
-
-  return cors(corsOptions);
+  });
 }
 
 function startAppListener(app) {
