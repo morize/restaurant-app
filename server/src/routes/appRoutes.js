@@ -4,7 +4,7 @@ const { join } = require('path');
 const appRoutes = Router();
 
 function setAppRouteFolder() {
-  return static(join(__dirname, '../../', 'public'));
+  return static(join(__dirname, '../..', 'public'));
 }
 
 appRoutes.get(
