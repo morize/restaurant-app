@@ -2,7 +2,7 @@ const cors = require('cors');
 const { readFileSync } = require('fs');
 const { createServer } = require('https');
 
-const { ENVIRONMENT, PORT_PROD, PORT_DEV } = require('../utils/config');
+const { ENVIRONMENT, PORT } = require('../utils/config');
 
 function corsMiddleware() {
   return cors({
@@ -23,9 +23,9 @@ function startAppListener(app) {
         cert: readFileSync('.ssl/cert.pem'),
       },
       app
-    ).listen(PORT_PROD, () => console.log(`Listening on port: ${PORT_PROD}`));
+    ).listen(PORT, () => console.log(`Listening on port: ${PORT}`));
   } else {
-    app.listen(PORT_DEV, () => console.log(`Listening on port: ${PORT_DEV}`));
+    app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
   }
 }
 

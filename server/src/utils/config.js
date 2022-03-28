@@ -1,9 +1,8 @@
 const MONGO_URL = process.env.MONGO_URL;
 
-const PORT_DEV = process.env.PORT_DEV;
-const PORT_PROD = process.env.PORT_PROD;
-
 const ENVIRONMENT = process.env.NODE_ENV;
+const PORT = ENVIRONMENT === 'production' ? process.env.PORT_PROD : process.env.PORT_DEV;
+
 const PLAYGROUND = process.env.PLAYGROUND;
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -14,8 +13,7 @@ const COOKIE_KEY_2 = process.env.COOKIE_KEY_2;
 
 module.exports = {
   MONGO_URL,
-  PORT_DEV,
-  PORT_PROD,
+  PORT,
   ENVIRONMENT,
   PLAYGROUND,
   GOOGLE_CLIENT_ID,

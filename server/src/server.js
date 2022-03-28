@@ -13,23 +13,24 @@ const {
 const { apolloServer } = require('./setup/apollo');
 
 const authRoutes = require('./routes/authRoutes');
+const { setAppRouteFolder, appRoutes } = require('./routes/appRoutes');
 
 async function startApolloServer() {
   const app = express();
 
+  app.use([setAppRouteFolder(), appRoutes]);
+
   setupGooglePassportStrategy();
 
   app.use(helmetMiddleware());
-
   app.use(cookieMiddleware());
+  app.use(corsMiddleware());
 
   app.use([initializePassport(), initializePassportSession()]);
 
-  app.use(authRoutes);
-
-  app.use(corsMiddleware());
-
   const server = apolloServer();
+
+  app.use(authRoutes);
 
   await startMongoDBServer();
   await server.start();

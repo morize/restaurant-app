@@ -1,8 +1,11 @@
 const { Router } = require('express');
 const passport = require('passport');
 
-const { PLAYGROUND } = require('../utils/config');
+const { PLAYGROUND, ENVIRONMENT } = require('../utils/config');
 const authRoutes = Router();
+
+const serverUrl =
+  ENVIRONMENT === 'production' ? 'https://localhost' : 'http://localhost:3000';
 
 authRoutes.get(
   '/auth/google',
@@ -18,14 +21,14 @@ authRoutes.get(
     failureRedirect: '/failed',
     successRedirect: PLAYGROUND
       ? 'https://studio.apollographql.com/sandbox/explorer'
-      : 'http://localhost:3001/cafeteria',
+      : `${serverUrl}/cafeteria`,
     session: true,
   })
 );
 
 authRoutes.get('/auth/logout', (req, res) => {
   req.logout();
-  return res.redirect('http://localhost:3001');
+  return res.redirect(serverUrl);
 });
 
 authRoutes.get('/failure', (req, res) => res.send('Failed to log in.'));
