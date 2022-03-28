@@ -33,7 +33,7 @@ function setupGooglePassportStrategy() {
   passport.use(
     new Strategy(
       googleStrategyOptions,
-      (accessToken, refreshToken, profile, done) => done(null, profile)
+      (_, __, profile, done) => done(null, profile)
     )
   );
 

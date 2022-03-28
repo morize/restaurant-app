@@ -4,8 +4,6 @@ const { ApolloServer } = require('apollo-server-express');
 const { loadFilesSync } = require('@graphql-tools/load-files');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 
-const { PLAYGROUND } = require('../utils/config');
-
 function getSchema() {
   const typeDefs = loadFilesSync(join(__dirname, '../**/*.graphql'));
   const resolvers = loadFilesSync(join(__dirname, '../**/*.resolvers.js'));
@@ -31,7 +29,6 @@ function apolloServer() {
     context: readContext,
     cache: true,
     debug: false,
-    //introspection: PLAYGROUND,
   });
 }
 
