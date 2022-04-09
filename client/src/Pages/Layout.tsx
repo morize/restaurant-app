@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Navigation, { ICartItem } from '../Pages/Navigation';
+import Subnavigation from './Subnavigation';
 
 const Layout = () => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
@@ -33,11 +34,13 @@ const Layout = () => {
     <>
       <Navigation cartItems={cartItems} />
 
-      <main>
-        <div className="w-11/12 h-[800px] my-6 mx-auto py-16 px-20 bg-black bg-opacity-70 overflow-auto">
+      <div className="flex mt-8 mx-16 text-white bg-black bg-opacity-70">
+        <Subnavigation />
+
+        <main className="flex m-auto w-4/5 min-h-screen p-8">
           <Outlet context={{ cartItems, addToCart }} />
-        </div>
-      </main>
+        </main>
+      </div>
     </>
   );
 };

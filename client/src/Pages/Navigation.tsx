@@ -30,8 +30,8 @@ const Navigation = ({ cartItems }: INavigation) => {
   const navigate = useNavigate();
 
   return (
-    <nav className="sticky top-0 flex items-center w-full h-28 px-44 text-white bg-[#402200] z-10">
-      <ul className="flex flex-wrap gap-14">
+    <nav className="sticky top-0 flex h-26 px-44 py-6 bg-[#402200] text-white z-10">
+      <ul className="flex gap-14">
         <NavListItem
           label="Cafeteria"
           icon={<MenuIcon />}
@@ -49,17 +49,13 @@ const Navigation = ({ cartItems }: INavigation) => {
         />
       </ul>
 
-      <ul className="flex ml-auto gap-14">
+      <ul className="flex gap-14 ml-auto">
         <NavListItem
           label="Cart"
           icon={<CartIcon />}
-          onClick={(e) => {
-            e.preventDefault();
-            cartItems.length !== 0 &&
-              navigate('/cafeteria/checkout', { state: cartItems });
-          }}
+          onClick={(e) => navigate('/cafeteria/checkout', { state: cartItems })}
         >
-          <span className="flex items-center justify-center absolute right-0 w-8 h-8 rounded-full bg-red-700">
+          <span className="absolute right-0 flex items-center justify-center w-8 h-8 rounded-full bg-red-700">
             {cartItems.length}
           </span>
         </NavListItem>
