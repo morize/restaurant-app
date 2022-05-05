@@ -18,7 +18,7 @@ import Users from '../Pages/Admin/Users';
 
 const AppRoutes = () => (
   <Routes>
-    <Route path="/app" element={<Start />} />
+    <Route path="/" element={<Start />} />
     <Route path="/app/about" element={<Start />} />
 
     <Route path="/app" element={<PrivateRoute />}>

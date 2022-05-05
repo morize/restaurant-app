@@ -8,7 +8,7 @@ function setAppRouteFolder() {
 }
 
 appRoutes.get(
-  ['/cafeteria', '/cafeteria/*', '/account', '/admin', '/admin/*'],
+  ['/app/','/app/*'],
   (req, res) => {
     res.sendFile(join(__dirname, '../../public', 'index.html'));
   }

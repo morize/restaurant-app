@@ -21,14 +21,14 @@ authRoutes.get(
     failureRedirect: '/failed',
     successRedirect: PLAYGROUND
       ? 'https://studio.apollographql.com/sandbox/explorer'
-      : `${serverUrl}/cafeteria`,
+      : `${serverUrl}/app/cafeteria`,
     session: true,
   })
 );
 
 authRoutes.get('/auth/logout', (req, res) => {
   req.logout();
-  return res.redirect(serverUrl);
+  return res.redirect(`${serverUrl}/app`);
 });
 
 authRoutes.get('/failure', (req, res) => res.send('Failed to log in.'));
