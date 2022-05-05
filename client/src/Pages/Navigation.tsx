@@ -35,17 +35,17 @@ const Navigation = ({ cartItems }: INavigation) => {
         <NavListItem
           label="Cafeteria"
           icon={<MenuIcon />}
-          onClick={() => navigate('/cafeteria')}
+          onClick={() => navigate('/app/cafeteria')}
         />
         <NavListItem
           label="About Us"
           icon={<ContactIcon />}
-          onClick={() => navigate('/about')}
+          onClick={() => navigate('/app/about')}
         />
         <NavListItem
           label="Account"
           icon={<AccountIcon />}
-          onClick={() => navigate('/account')}
+          onClick={() => navigate('/app/account')}
         />
       </ul>
 
@@ -53,7 +53,7 @@ const Navigation = ({ cartItems }: INavigation) => {
         <NavListItem
           label="Cart"
           icon={<CartIcon />}
-          onClick={(e) => navigate('/cafeteria/checkout', { state: cartItems })}
+          onClick={(e) => navigate('/app/cafeteria/checkout', { state: cartItems })}
         >
           <span className="absolute right-0 flex items-center justify-center w-8 h-8 rounded-full bg-red-700">
             {cartItems.length}

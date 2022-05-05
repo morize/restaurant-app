@@ -52,7 +52,10 @@ const Items = () => {
                   </button>
                   <button
                     className="flex justify-center items-center w-16 h-8 bg-blue-900"
-                    onClick={() => navigate(`/admin/items/${item._id}`)}
+                    onClick={() => {
+                      window.scrollTo(0,0);
+                      navigate(`/app/admin/items/${item._id}`);
+                    }}
                   >
                     Edit
                   </button>
@@ -65,7 +68,10 @@ const Items = () => {
       <Button
         label="Add New Item"
         variant="primary"
-        onClick={() => navigate('/admin/items/new')}
+        onClick={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          navigate('/app/admin/items/new');
+        }}
       />
     </div>
   );

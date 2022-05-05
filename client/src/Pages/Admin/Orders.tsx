@@ -62,7 +62,7 @@ const Orders = () => {
                       </button>
                       <button
                         className="flex justify-center items-center w-16 h-8 bg-blue-900"
-                        onClick={() => navigate(`/admin/orders/${order._id}`)}
+                        onClick={() => navigate(`/app/admin/orders/${order._id}`)}
                       >
                         View
                       </button>
