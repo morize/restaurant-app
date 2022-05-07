@@ -13,6 +13,7 @@ const {
 const { apolloServer } = require('./setup/apollo');
 
 const authRoutes = require('./routes/authRoutes');
+const fileRoutes = require('./routes/fileRoutes');
 const { setAppRouteFolder, appRoutes } = require('./routes/appRoutes');
 
 async function startApolloServer() {
@@ -31,6 +32,7 @@ async function startApolloServer() {
   const server = apolloServer();
 
   app.use(authRoutes);
+  app.use(fileRoutes);
 
   await startMongoDBServer();
   await server.start();
