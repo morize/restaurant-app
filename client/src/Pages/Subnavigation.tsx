@@ -31,18 +31,6 @@ const Subnavigation = () => {
             onClick={() => navigate('cafeteria/dessert')}
           />
         </ul>
-
-        <p className="mt-12 mb-6">Filter</p>
-        <ul className="flex flex-col gap-y-5">
-          <ListItemButton
-            label="Breakfast"
-            onClick={() => navigate('cafeteria/breakfast')}
-          />
-          <ListItemButton
-            label="Meals"
-            onClick={() => navigate('cafeteria/meal')}
-          />
-        </ul>
       </div>
     </div>
   );

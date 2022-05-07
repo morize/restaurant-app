@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import Button from '../Components/Button';
+import TextArea from '../Components/TextArea';
 import { CREATE_ORDER, OrdersData } from '../ApiCalls/Orders';
 import { ICartItem } from '../Pages/Navigation';
 
@@ -50,9 +51,9 @@ const Checkout = () => {
         <p>{getTotalPrice()}$</p>
       </div>
 
-      <label className="mt-8">Extra Info</label>
-      <textarea
+      <TextArea
         className="text-black"
+        label='Extra Info'
         value={extraInfo}
         onChange={(e) => setExtraInfo(e.target.value)}
       />

@@ -38,7 +38,7 @@ const Layout = () => {
         <div className="flex w-[1720px] mx-auto">
           <Subnavigation />
 
-          <main className="w-4/5 my-auto px-44 py-44">
+          <main className="w-4/5 px-44 py-44">
             <Outlet context={{ cartItems, addToCart }} />
           </main>
         </div>
