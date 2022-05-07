@@ -1,9 +1,9 @@
 import Routes from './Routes/Routes';
 
 const App = () => (
-  <body className="h-full bg-main bg-cover font-solway bg-fixed">
+  <div className="h-full bg-main bg-cover font-solway bg-fixed">
     <Routes />
-  </body>
+  </div>
 );
 
 export default App;

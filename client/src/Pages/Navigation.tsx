@@ -30,7 +30,7 @@ const Navigation = ({ cartItems }: INavigation) => {
   const navigate = useNavigate();
 
   return (
-    <nav className="sticky top-0 flex h-26 px-44 py-6 bg-[#402200] text-white z-10">
+    <nav className="fixed w-full top-0 flex h-[100px] px-44 py-6 bg-[#402200] text-white z-10">
       <ul className="flex gap-14">
         <NavListItem
           label="Cafeteria"

@@ -21,20 +21,17 @@ const MenuItem = ({
   const [quantity, setQuantity] = useState(initialQuantity);
 
   return (
-    <li className="flex w-full h-56 mb-12 py-8 px-12 bg-[#412929]">
-      <figure className="min-w-[12rem] h-full bg-white">
-        <img alt="placeholder"/>
+    <li className="flex h-56 mb-12 px-8 items-center justify-around bg-[#412929]">
+      <figure className="w-1/4 h-auto">
+        <img className="w-[200px] h-[140px] m-auto" alt="placeholder" src="https:/localhost/images/default.jpg"/>
       </figure>
 
-      <div className="flex flex-col mx-8">
+      <div className="mx-8 px-4 w-1/2">
         <p className="text-2xl mb-6">{name}</p>
         <p className="text-sm">{description}</p>
       </div>
 
-      <div className="flex flex-col min-w-[10rem] items-center justify-center ml-auto">
-        <span>{price}$</span>
-        <span className="my-4">⭐⭐⭐⭐⭐</span>
-
+      <div className="w-1/5 ml-auto">
         <div className="flex flex-row w-full gap-4">
           <button
             className="w-14 h-12 bg-[#8B3939]"
@@ -68,6 +65,8 @@ const MenuItem = ({
             <p className="text-xs">-</p>
           </button>
         </div>
+        <p>{price}$</p>
+        <span className="my-4">⭐⭐⭐⭐⭐</span>
       </div>
     </li>
   );

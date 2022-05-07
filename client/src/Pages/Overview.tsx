@@ -16,11 +16,11 @@ const Overview = () => {
   const { cartItems, addToCart } = useOutletContext<ICartItems>();
 
   return (
-    <div className="flex w-full flex-col m-8 px-32 py-16 bg-[#261000] text-white text-sm">
+    <div className="m-8 px-40 py-16 text-white text-sm">
       {!loading ? (
         <>
           <p className="w-full mb-8">
-            {data ? data.getItemsByType.length : 0} results found for{' '}
+            {data ? data.getItemsByType.length : 0} results fsound for{' '}
             <span className="capitalize">{category}</span>
           </p>
 

@@ -34,12 +34,14 @@ const Layout = () => {
     <>
       <Navigation cartItems={cartItems} />
 
-      <div className="flex mt-8 mx-16 text-white bg-black bg-opacity-70">
-        <Subnavigation />
+      <div className="text-white bg-black bg-opacity-80 px-[120px]">
+        <div className="flex w-[1720px] mx-auto">
+          <Subnavigation />
 
-        <main className="flex m-auto w-4/5 min-h-screen p-8">
-          <Outlet context={{ cartItems, addToCart }} />
-        </main>
+          <main className="w-4/5 py-24">
+            <Outlet context={{ cartItems, addToCart }} />
+          </main>
+        </div>
       </div>
     </>
   );
