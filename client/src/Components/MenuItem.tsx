@@ -23,18 +23,23 @@ const MenuItem = ({
   return (
     <li className="flex h-56 mb-12 px-8 items-center justify-around bg-[#412929]">
       <figure className="w-1/4 h-auto">
-        <img className="w-[200px] h-[140px] m-auto" alt="placeholder" src="https:/localhost/images/default.jpg"/>
+        <img
+          className="w-[200px] h-[140px] m-auto"
+          alt="placeholder"
+          src="https:/localhost/images/default.jpg"
+        />
       </figure>
 
       <div className="mx-8 px-4 w-1/2">
-        <p className="text-2xl mb-6">{name}</p>
-        <p className="text-sm">{description}</p>
+        <p className="text-2xl mb-4">{name}</p>
+        <p className="text-[0.8rem]">{description}</p>
       </div>
 
       <div className="w-1/5 ml-auto">
-        <div className="flex flex-row w-full gap-4">
+        <p className="mb-4 text-center text-lg">{price}$</p>
+        <div className="flex flex-row items-center justify-center w-full gap-4">
           <button
-            className="w-14 h-12 bg-[#8B3939]"
+            className="w-10 h-10 bg-[#8B3939]"
             onClick={() => {
               setQuantity(quantity + 1);
               addToCart({
@@ -45,11 +50,11 @@ const MenuItem = ({
               });
             }}
           >
-            <p className="text-base">+</p>
+            +
           </button>
-          <p className="w-5 m-auto">{quantity}</p>
+          <p className='w-2'>{quantity}</p>
           <button
-            className="w-14 h-12 bg-[#8B3939]"
+            className="w-10 h-10 bg-[#8B3939]"
             onClick={() => {
               if (quantity !== 0) {
                 setQuantity(quantity - 1);
@@ -62,11 +67,9 @@ const MenuItem = ({
               }
             }}
           >
-            <p className="text-xs">-</p>
+            -
           </button>
         </div>
-        <p>{price}$</p>
-        <span className="my-4">⭐⭐⭐⭐⭐</span>
       </div>
     </li>
   );

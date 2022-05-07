@@ -16,7 +16,7 @@ const Overview = () => {
   const { cartItems, addToCart } = useOutletContext<ICartItems>();
 
   return (
-    <div className="m-8 px-40 py-16 text-white text-sm">
+    <div className="text-white text-sm">
       {!loading ? (
         <>
           <p className="w-full mb-8">
