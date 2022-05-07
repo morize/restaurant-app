@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import Button from '../Components/Button';
@@ -9,6 +9,7 @@ import { ICartItem } from '../Pages/Navigation';
 
 const Checkout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const cartItems = location.state as ICartItem[];
 
   const [createOrder] = useMutation<OrdersData>(CREATE_ORDER);
@@ -22,13 +23,13 @@ const Checkout = () => {
       (cartItem) => (totalPrice += cartItem.quantity * cartItem.price)
     );
 
-    return totalPrice;
+    return totalPrice.toFixed(2);
   };
 
   return (
     // should be table
-    <div className="flex flex-col text-white ">
-      <div className="flex w-full justify-between mb-4 ">
+    <div className="flex flex-col w-[800px] mx-auto text-white">
+      <div className="flex justify-between mb-4">
         <p>Name</p>
         <p>
           <span className="mr-10">Quantity</span>Price
@@ -74,6 +75,10 @@ const Checkout = () => {
           });
         }}
       />
+
+      <Button label="Back to cafeteria" variant='danger' onClick={()=>{
+        navigate('/app/cafeteria/breakfast')
+      }}/>
     </div>
   );
 };

@@ -20,7 +20,7 @@ const Overview = () => {
       {!loading ? (
         <>
           <p className="w-full mb-8">
-            {data ? data.getItemsByType.length : 0} results fsound for{' '}
+            {data ? data.getItemsByType.length : 0} results found for{' '}
             <span className="capitalize">{category}</span>
           </p>
 

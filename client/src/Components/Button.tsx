@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: String;
-  variant?: 'primary' | 'secondary' | 'google';
+  variant?: 'primary' | 'secondary' | 'danger' | 'google';
 }
 
 const getColorFromVariant = (variant: string) => {
@@ -11,6 +11,8 @@ const getColorFromVariant = (variant: string) => {
       return 'bg-blue-900';
     case 'secondary':
       return 'bg-green-900';
+    case 'danger':
+      return 'bg-red-900';
     case 'google':
       return 'bg-blue-600';
     default:

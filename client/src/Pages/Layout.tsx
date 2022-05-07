@@ -1,11 +1,25 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import Navigation, { ICartItem } from '../Pages/Navigation';
 import Subnavigation from './Subnavigation';
 
 const Layout = () => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+
+  const pathName = useLocation().pathname;
+
+  const determineSubnavigation = () => {
+    if (
+      pathName === '/app/cafeteria' ||
+      pathName === '/app/admin' ||
+      pathName !== '/app/cafeteria/checkout'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const addToCart = (newCartItem: ICartItem) => {
     const newArray = [...cartItems];
@@ -34,11 +48,11 @@ const Layout = () => {
     <>
       <Navigation cartItems={cartItems} />
 
-      <div className="w-full text-white bg-black bg-opacity-80">
-        <div className="flex w-[1720px] mx-auto">
-          <Subnavigation />
+      <div className="flex w-full min-h-screen text-white bg-black bg-opacity-80">
+        <div className="flex w-[1720px] m-auto">
+          {determineSubnavigation() && <Subnavigation />}
 
-          <main className="w-4/5 px-44 py-44">
+          <main className="w-4/5 px-44 py-44 mx-auto">
             <Outlet context={{ cartItems, addToCart }} />
           </main>
         </div>
