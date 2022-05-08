@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 
 const imageStorage = multer.diskStorage({
-  destination: './public/images',
+  destination: './storage/images',
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
@@ -28,7 +28,7 @@ function getImage(req, res) {
   const fileName = req.params.id;
 
   res.sendFile(
-    path.join(__dirname, '../..', 'public/images', fileName),
+    path.join(__dirname, '../..', 'storage/images', fileName),
     (err) => {
       if (err) {
         res.status(err.status).end();
