@@ -29,7 +29,8 @@ module.exports = {
         args.name,
         args.description,
         args.price,
-        args.type
+        args.type,
+        args.imagePath
       );
     },
 
@@ -40,7 +41,8 @@ module.exports = {
         args.name,
         args.description,
         args.price,
-        args.type
+        args.type,
+        args.imagePath
       );
     },
 

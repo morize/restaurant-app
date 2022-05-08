@@ -18,6 +18,12 @@ const itemsSchema = new Schema({
     required: true,
     enum: ['breakfast', 'meal', 'dessert', 'drink'],
   },
+
+  imagePath: {
+    type: String,
+    required: true,
+    default: 'default.jpg',
+  },
 });
 
 module.exports = model('Item', itemsSchema);

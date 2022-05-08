@@ -27,16 +27,17 @@ async function getItemsByPrice(min, max) {
   return await items.find({ price: { $gte: min, $lte: max } });
 }
 
-async function createItem(name, description, price, type) {
+async function createItem(name, description, price, type, imagePath) {
   return await items.create({
     name,
     description,
     price,
     type,
+    imagePath,
   });
 }
 
-async function updateItem(id, name, description, price, type) {
+async function updateItem(id, name, description, price, type, imagePath) {
   checkForValidId(id);
 
   const updatedItem = await items.findOneAndUpdate(
@@ -46,6 +47,7 @@ async function updateItem(id, name, description, price, type) {
       description,
       price,
       type,
+      imagePath,
     }
   );
 
@@ -68,8 +70,8 @@ async function populateItemsData() {
   const itemsData = [];
 
   for (let i = 0; i < defaultItemsData.length; i++) {
-    let { name, description, price, type } = defaultItemsData[i];
-    let item = await createItem(name, description, price, type);
+    let { name, description, price, type, imagePath } = defaultItemsData[i];
+    let item = await createItem(name, description, price, type, imagePath);
     itemsData.push(item);
   }
 

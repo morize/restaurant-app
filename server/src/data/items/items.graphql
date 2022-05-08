@@ -12,6 +12,7 @@ type Mutation {
     description: String
     price: Float!
     type: String!
+    imagePath: String!
   ): Item
 
   updateItem(
@@ -20,6 +21,7 @@ type Mutation {
     description: String
     price: Float
     type: String
+    imagePath: String
   ): Item
 
   deleteItem(id: ID!): Item
@@ -33,4 +35,5 @@ type Item {
   description: String
   price: Float!
   type: String!
+  imagePath: String!
 }
