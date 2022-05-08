@@ -11,7 +11,11 @@ const CreateItem = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [image, setImage] = useState<File | null>(null);
   const [type, setType] = useState('');
+
+  const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+    e.target.files && setImage(e.target.files[0]);
 
   return (
     <div>
@@ -20,12 +24,15 @@ const CreateItem = () => {
         onSubmit={(e) => {
           e.preventDefault();
 
+          // Route to upload image
+
           createItem({
             variables: {
               name: name,
               description: description,
               price: parseFloat(price),
               type: type,
+              imageName: image ? image.name : 'default.jpg',
             },
           });
         }}
@@ -48,6 +55,14 @@ const CreateItem = () => {
           min="0"
           step=".01"
           onChange={(e) => setPrice(e.target.value)}
+        />
+
+        <Input
+          label="Image"
+          required
+          type="file"
+          accept=".jpg,.png,.jpeg"
+          onChange={(e) => handleImageInput(e)}
         />
 
         <div className="block my-[24px]">
