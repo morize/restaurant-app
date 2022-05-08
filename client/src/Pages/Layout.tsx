@@ -11,12 +11,16 @@ const Layout = () => {
 
   const determineSubnavigation = () => {
     if (
-      pathName === '/app/cafeteria' ||
-      pathName === '/app/admin' ||
-      pathName !== '/app/cafeteria/checkout'
+      !pathName.includes('/app/cafeteria') &&
+      !pathName.includes('/app/admin')
     ) {
-      return true;
+      return false;
     } else {
+      let pathArray = pathName.split('/').filter((value) => value!);
+
+      if (pathArray.length < 4 && pathName !== '/app/cafeteria/checkout') {
+        return true;
+      }
       return false;
     }
   };
