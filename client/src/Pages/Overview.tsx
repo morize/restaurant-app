@@ -1,9 +1,9 @@
 import { useOutletContext } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-
 import { useParams } from 'react-router-dom';
-import { GET_ITEMS_BY_TYPE, ItemsData } from '../ApiCalls/Items';
 
+import { GET_ITEMS_BY_TYPE, ItemsData } from '../ApiCalls/Items';
+import { config } from '../Utils/config';
 import MenuItem from '../Components/MenuItem';
 import { ICartItems } from './Navigation';
 
@@ -26,20 +26,24 @@ const Overview = () => {
 
           <ul>
             {data &&
-              data.getItemsByType.map(({ _id, name, description, price }) => (
-                <MenuItem
-                  id={_id}
-                  name={name}
-                  description={description}
-                  price={price}
-                  addToCart={addToCart}
-                  key={_id}
-                  initialQuantity={
-                    // do with redux instead, this loops through your cart for each fetched card item
-                    cartItems.find((cartItem) => cartItem.id === _id)?.quantity
-                  }
-                />
-              ))}
+              data.getItemsByType.map(
+                ({ _id, name, description, price, imagePath }) => (
+                  <MenuItem
+                    id={_id}
+                    name={name}
+                    description={description}
+                    price={price}
+                    addToCart={addToCart}
+                    key={_id}
+                    initialQuantity={
+                      // do with redux instead, this loops through your cart for each fetched card item
+                      cartItems.find((cartItem) => cartItem.id === _id)
+                        ?.quantity
+                    }
+                    imagePath={`${config.API_URL}/images/${imagePath}`}
+                  />
+                )
+              )}
           </ul>
         </>
       ) : (

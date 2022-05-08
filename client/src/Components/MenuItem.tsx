@@ -8,6 +8,7 @@ interface IMenuItem {
   price: number;
   addToCart: (cartItem: ICartItem) => void;
   initialQuantity?: number;
+  imagePath: string;
 }
 
 const MenuItem = ({
@@ -17,6 +18,7 @@ const MenuItem = ({
   price,
   addToCart,
   initialQuantity = 0,
+  imagePath,
 }: IMenuItem) => {
   const [quantity, setQuantity] = useState(initialQuantity);
 
@@ -26,7 +28,7 @@ const MenuItem = ({
         <img
           className="w-[200px] h-[140px] m-auto"
           alt="placeholder"
-          src="https:/localhost/images/default.jpg"
+          src={imagePath}
         />
       </figure>
 
@@ -52,7 +54,7 @@ const MenuItem = ({
           >
             +
           </button>
-          <p className='w-2'>{quantity}</p>
+          <p className="w-2">{quantity}</p>
           <button
             className="w-10 h-10 bg-[#8B3939]"
             onClick={() => {

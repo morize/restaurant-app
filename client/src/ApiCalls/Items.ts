@@ -7,6 +7,7 @@ export interface Item {
   description: string;
   price: number;
   type: string;
+  imagePath: string;
 }
 
 export interface ItemsData {
@@ -24,6 +25,7 @@ export const GET_ITEM_BY_ID = gql`
       description
       price
       type
+      imagePath
     }
   }
 `;
@@ -36,6 +38,7 @@ export const GET_ALL_ITEMS = gql`
       description
       price
       type
+      imagePath
     }
   }
 `;
@@ -48,6 +51,7 @@ export const GET_ITEMS_BY_TYPE = gql`
       description
       price
       type
+      imagePath
     }
   }
 `;
@@ -58,12 +62,14 @@ export const CREATE_ITEM = gql`
     $description: String
     $price: Float!
     $type: String!
+    $imagePath: String!
   ) {
     createItem(
       name: $name
       description: $description
       price: $price
       type: $type
+      imagePath: $imagePath
     ) {
       _id
     }
@@ -77,6 +83,7 @@ export const UPDATE_ITEM = gql`
     $description: String
     $price: Float
     $type: String
+    $imagePath: String
   ) {
     updateItem(
       id: $id
@@ -84,6 +91,7 @@ export const UPDATE_ITEM = gql`
       description: $description
       price: $price
       type: $type
+      imagePath: $imagePath
     ) {
       name
     }

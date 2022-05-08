@@ -12,7 +12,7 @@ const CreateItem = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState<File>();
-  const [type, setType] = useState('');
+  const [type, setType] = useState('Breakfast');
 
   const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     e.target.files && setImage(e.target.files[0]);
@@ -24,25 +24,30 @@ const CreateItem = () => {
         encType="multipart/form-data"
         onSubmit={(e) => {
           e.preventDefault();
+          try {
+            if (image) {
+              const data = new FormData();
 
-          if (image) {
-            const data = new FormData();
+              data.append('image', image);
+              fetch('https://localhost/images', {
+                method: 'POST',
+                body: data,
+              });
 
-            data.append('image', image);
-            fetch('https://localhost/images', {
-              method: 'POST',
-              body: data,
-            });
+              createItem({
+                variables: {
+                  name: name,
+                  description: description,
+                  price: parseFloat(price),
+                  type: type,
+                  imagePath: image.name,
+                },
+              });
 
-            createItem({
-              variables: {
-                name: name,
-                description: description,
-                price: parseFloat(price),
-                type: type,
-                imageName: image ? image.name : 'default.jpg',
-              },
-            });
+              alert('Succesfully created new item')
+            }
+          } catch (e) {
+            alert('An error has ocurred');
           }
         }}
       >
@@ -73,7 +78,6 @@ const CreateItem = () => {
           accept=".jpg,.png,.jpeg"
           onChange={(e) => handleImageInput(e)}
           name="image"
-          formEncType="multipart/form-data"
         />
 
         <div className="block my-[24px]">
