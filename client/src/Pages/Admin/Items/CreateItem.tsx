@@ -11,7 +11,7 @@ const CreateItem = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File>();
   const [type, setType] = useState('');
 
   const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -21,20 +21,29 @@ const CreateItem = () => {
     <div>
       <h2 className="text-xl mb-6">Create new item</h2>
       <form
+        encType="multipart/form-data"
         onSubmit={(e) => {
           e.preventDefault();
 
-          // Route to upload image
+          if (image) {
+            const data = new FormData();
 
-          createItem({
-            variables: {
-              name: name,
-              description: description,
-              price: parseFloat(price),
-              type: type,
-              imageName: image ? image.name : 'default.jpg',
-            },
-          });
+            data.append('image', image);
+            fetch('https://localhost/images', {
+              method: 'POST',
+              body: data,
+            });
+
+            createItem({
+              variables: {
+                name: name,
+                description: description,
+                price: parseFloat(price),
+                type: type,
+                imageName: image ? image.name : 'default.jpg',
+              },
+            });
+          }
         }}
       >
         <Input
@@ -63,6 +72,8 @@ const CreateItem = () => {
           type="file"
           accept=".jpg,.png,.jpeg"
           onChange={(e) => handleImageInput(e)}
+          name="image"
+          formEncType="multipart/form-data"
         />
 
         <div className="block my-[24px]">
