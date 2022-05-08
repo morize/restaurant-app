@@ -73,6 +73,8 @@ const Checkout = () => {
           createOrder({
             variables: { orderItems: itemsToAdd, extraInfo: extraInfo },
           });
+
+          alert('Your order has been placed')
         }}
       />
 

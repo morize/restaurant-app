@@ -53,7 +53,10 @@ const Navigation = ({ cartItems }: INavigation) => {
         <NavListItem
           label="Cart"
           icon={<CartIcon />}
-          onClick={(e) => navigate('/app/cafeteria/checkout', { state: cartItems })}
+          onClick={(e) =>
+            cartItems.length > 0 &&
+            navigate('/app/cafeteria/checkout', { state: cartItems })
+          }
         >
           <span className="absolute right-0 flex items-center justify-center w-8 h-8 rounded-full bg-red-700">
             {cartItems.length}
