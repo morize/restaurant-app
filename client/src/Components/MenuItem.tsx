@@ -29,6 +29,7 @@ const MenuItem = ({
           className="w-[200px] h-[140px] m-auto"
           alt="placeholder"
           src={imagePath}
+          crossOrigin="use-credentials"
         />
       </figure>
 

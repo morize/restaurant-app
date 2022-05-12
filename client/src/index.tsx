@@ -22,7 +22,6 @@ const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
   name: 'HotelCateringApp',
-  credentials: 'include',
 });
 
 ReactDOM.render(
