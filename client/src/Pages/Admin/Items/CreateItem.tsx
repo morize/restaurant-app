@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_ITEM, ItemsData } from '../../../ApiCalls/Items';
+import { config } from '../../../Utils/config';
 
 import Input from '../../../Components/Input';
 import TextArea from '../../../Components/TextArea';
@@ -29,7 +30,7 @@ const CreateItem = () => {
               const data = new FormData();
 
               data.append('image', image);
-              fetch('https://localhost/images', {
+              fetch(`${config.API_URL}/images/`, {
                 method: 'POST',
                 body: data,
               });
@@ -44,7 +45,7 @@ const CreateItem = () => {
                 },
               });
 
-              alert('Succesfully created new item')
+              alert('Succesfully created new item');
             }
           } catch (e) {
             alert('An error has ocurred');

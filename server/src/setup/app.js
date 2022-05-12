@@ -20,8 +20,8 @@ function setupExpressApp() {
 
   setupGooglePassportStrategy();
 
-  app.use(cookieMiddleware);
   app.use(corsMiddleware);
+  app.use(cookieMiddleware);
   app.use([initializePassport(), initializePassportSession()]);
 
   app.use([express.static('public'), appRoutes]);
