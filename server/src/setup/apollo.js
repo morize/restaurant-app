@@ -23,13 +23,11 @@ async function readContext({ req, res }) {
   return { currentUserId: userId, isAuthenticated: isAuthenticated };
 }
 
-function apolloServer() {
-  return new ApolloServer({
-    schema: getSchema(),
-    context: readContext,
-    cache: true,
-    debug: false,
-  });
-}
+const apolloServer = new ApolloServer({
+  schema: getSchema(),
+  context: readContext,
+  cache: true,
+  debug: false,
+});
 
-module.exports = { apolloServer };
+module.exports = apolloServer;

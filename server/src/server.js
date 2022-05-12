@@ -1,46 +1,36 @@
-const express = require('express');
 require('dotenv').config();
 
-const { helmetMiddleware } = require('./setup/helmet');
+const { readFileSync } = require('fs');
+const https = require('https');
+const http = require('http');
+
+const app = require('./setup/app');
+const apolloServer = require('./setup/apollo');
 const { startMongoDBServer } = require('./setup/database');
-const { corsMiddleware, startAppListener } = require('./setup/protocol');
-const { cookieMiddleware } = require('./setup/cookies');
-const {
-  setupGooglePassportStrategy,
-  initializePassport,
-  initializePassportSession,
-} = require('./setup/passport');
-const { apolloServer } = require('./setup/apollo');
 
-const authRoutes = require('./routes/authRoutes');
-const fileRoutes = require('./routes/fileRoutes');
-const { setAppRouteFolder, appRoutes } = require('./routes/appRoutes');
+const { ENVIRONMENT, PORT } = require('./utils/config');
 
-async function startApolloServer() {
-  const app = express();
-  
-  app.use(helmetMiddleware());
-  
-  app.use([setAppRouteFolder(), appRoutes]);
-
-  setupGooglePassportStrategy();
-
-  app.use(cookieMiddleware());
-  app.use(corsMiddleware());
-
-  app.use([initializePassport(), initializePassportSession()]);
-
-  const server = apolloServer();
-
-  app.use(authRoutes);
-  app.use(fileRoutes);
-
-  await startMongoDBServer();
-  await server.start();
-
-  server.applyMiddleware({ app, path: '/graphql', cors: false });
-
-  startAppListener(app);
+function determineServerProtocol(app) {
+  if (ENVIRONMENT === 'production') {
+    const serverCredentials = {
+      key: readFileSync('.ssl/key.pem'),
+      cert: readFileSync('.ssl/cert.pem'),
+    };
+    return https.createServer(serverCredentials, app);
+  } else {
+    return http.createServer(app);
+  }
 }
 
-startApolloServer();
+async function startServer() {
+  const server = determineServerProtocol(app);
+
+  await startMongoDBServer();
+  await apolloServer.start();
+
+  apolloServer.applyMiddleware({ app, path: '/graphql', cors: false });
+
+  server.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+}
+
+startServer();
