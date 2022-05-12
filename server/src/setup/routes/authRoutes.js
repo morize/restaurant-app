@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const passport = require('passport');
 
-const { PLAYGROUND, ENVIRONMENT } = require('../utils/config');
+const { PLAYGROUND, ENVIRONMENT } = require('../../utils/config');
 const authRoutes = Router();
 
 const serverUrl =

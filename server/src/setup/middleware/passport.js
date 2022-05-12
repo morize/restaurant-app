@@ -4,23 +4,15 @@ const { Strategy } = require('passport-google-oauth20');
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../../utils/config');
 const { getUserByGoogleId, createUser } = require('../../data/users/users.model');
 
-async function findOrCreateUser(user, done) {
-  const existingUser = await getUserByGoogleId(user.id);
+async function findOrCreateUserInDatabase(profile, done) {
+  const existingUser = await getUserByGoogleId(profile.id);
 
   if (!existingUser) {
-    const newUserDoc = await createUser(user.name.givenName, user.id);
+    const newUserDoc = await createUser(profile.name.givenName, profile.id);
     done(null, newUserDoc._id);
   } else {
     done(null, existingUser._id);
   }
-}
-
-function initializePassport() {
-  return passport.initialize();
-}
-
-function initializePassportSession() {
-  return passport.session();
 }
 
 function setupGooglePassportStrategy() {
@@ -37,9 +29,17 @@ function setupGooglePassportStrategy() {
     )
   );
 
-  passport.serializeUser(findOrCreateUser);
+  passport.serializeUser(findOrCreateUserInDatabase);
 
   passport.deserializeUser((id, done) => done(null, id));
+}
+
+function initializePassport() {
+  return passport.initialize();
+}
+
+function initializePassportSession() {
+  return passport.session();
 }
 
 module.exports = {

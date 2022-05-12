@@ -28,12 +28,12 @@ function getImage(req, res) {
   const fileName = req.params.id;
 
   res.sendFile(
-    path.join(__dirname, '../..', 'storage/images', fileName),
+    path.join(__dirname, '../../..', 'storage/images', fileName),
     (err) => {
       if (err) {
         res.status(err.status).end();
       } else {
-        console.log('Sent:', fileName);
+        //console.log('Sent:', fileName);
       }
     }
   );

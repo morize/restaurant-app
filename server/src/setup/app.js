@@ -9,23 +9,25 @@ const {
   initializePassportSession,
 } = require('./middleware/passport');
 
-const authRoutes = require('../routes/authRoutes');
-const fileRoutes = require('../routes/fileRoutes');
-const appRoutes = require('../routes/appRoutes');
+const authRoutes = require('./routes/authRoutes');
+const fileRoutes = require('./routes/fileRoutes');
+const appRoutes = require('./routes/appRoutes');
 
 const app = express();
 
-app.use(helmetMiddleware);
-app.use(cookieMiddleware);
-app.use(corsMiddleware);
+function setupExpressApp() {
+  app.use(helmetMiddleware);
+  app.use(cookieMiddleware);
+  app.use(corsMiddleware);
 
-app.use([express.static('public'), appRoutes]);
+  setupGooglePassportStrategy();
+  app.use([initializePassport(), initializePassportSession()]);
 
-setupGooglePassportStrategy();
+  app.use([express.static('public'), appRoutes]);
+  app.use(authRoutes);
+  app.use(fileRoutes);
+}
 
-app.use([initializePassport(), initializePassportSession()]);
-
-app.use(authRoutes);
-app.use(fileRoutes);
+setupExpressApp();
 
 module.exports = app;
