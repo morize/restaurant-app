@@ -1,10 +1,8 @@
 const helmet = require('helmet');
 
-function helmetMiddleware() {
-  return helmet({
-    contentSecurityPolicy: false,
-    crossOriginEmbedderPolicy: false,
-  });
-}
+const helmetMiddleware = helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
+});
 
-module.exports = { helmetMiddleware };
+module.exports = helmetMiddleware;

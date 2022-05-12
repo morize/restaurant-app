@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { helmetMiddleware } = require('./middleware/helmet');
+const helmetMiddleware = require('./middleware/helmet');
 const { corsMiddleware } = require('./middleware/protocol');
 const { cookieMiddleware } = require('./middleware/cookies');
 const {
@@ -15,7 +15,7 @@ const { setAppRouteFolder, appRoutes } = require('../routes/appRoutes');
 
 const app = express();
 
-app.use(helmetMiddleware());
+app.use(helmetMiddleware);
 
 app.use([setAppRouteFolder(), appRoutes]);
 
