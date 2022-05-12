@@ -31,7 +31,7 @@ function getImage(req, res) {
     path.join(__dirname, '../../..', 'storage/images', fileName),
     (err) => {
       if (err) {
-        res.status(err.status).end();
+        res.status(err.status);
       } else {
         //console.log('Sent:', fileName);
       }

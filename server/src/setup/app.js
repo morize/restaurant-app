@@ -17,15 +17,16 @@ const app = express();
 
 function setupExpressApp() {
   app.use(helmetMiddleware);
-  app.use(cookieMiddleware);
-  app.use(corsMiddleware);
 
   setupGooglePassportStrategy();
+
+  app.use(cookieMiddleware);
+  app.use(corsMiddleware);
   app.use([initializePassport(), initializePassportSession()]);
 
   app.use([express.static('public'), appRoutes]);
-  app.use(authRoutes);
   app.use(fileRoutes);
+  app.use(authRoutes);
 }
 
 setupExpressApp();
