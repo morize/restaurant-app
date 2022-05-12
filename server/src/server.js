@@ -18,12 +18,13 @@ const { setAppRouteFolder, appRoutes } = require('./routes/appRoutes');
 
 async function startApolloServer() {
   const app = express();
-
+  
+  app.use(helmetMiddleware());
+  
   app.use([setAppRouteFolder(), appRoutes]);
 
   setupGooglePassportStrategy();
 
-  app.use(helmetMiddleware());
   app.use(cookieMiddleware());
   app.use(corsMiddleware());
 

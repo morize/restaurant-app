@@ -6,8 +6,8 @@ function helmetMiddleware() {
   const isProduction = ENVIRONMENT === 'production';
 
   return helmet({
-    contentSecurityPolicy: isProduction,
-    crossOriginEmbedderPolicy: isProduction,
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
   });
 }
 
