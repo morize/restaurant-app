@@ -5,8 +5,8 @@ const https = require('https');
 const http = require('http');
 
 const app = require('./setup/app');
-const apolloServer = require('./setup/apollo');
 const { startMongoDBServer } = require('./setup/database');
+const { startApolloServer } = require('./setup/apollo');
 
 const { ENVIRONMENT, PORT } = require('./utils/config');
 
@@ -26,9 +26,7 @@ async function startServer() {
   const server = determineServerProtocol(app);
 
   await startMongoDBServer();
-  await apolloServer.start();
-
-  apolloServer.applyMiddleware({ app, path: '/graphql', cors: false });
+  await startApolloServer(app);
 
   server.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 }

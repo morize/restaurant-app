@@ -4,7 +4,7 @@ const {
   COOKIE_KEY_2,
   ENVIRONMENT,
   PLAYGROUND,
-} = require('../utils/config');
+} = require('../../utils/config');
 
 function cookieMiddleware() {
   const isProduction = ENVIRONMENT === 'production';

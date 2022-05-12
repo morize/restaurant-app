@@ -1,13 +1,13 @@
 const express = require('express');
 
-const { helmetMiddleware } = require('./helmet');
-const { corsMiddleware } = require('./protocol');
-const { cookieMiddleware } = require('./cookies');
+const { helmetMiddleware } = require('./middleware/helmet');
+const { corsMiddleware } = require('./middleware/protocol');
+const { cookieMiddleware } = require('./middleware/cookies');
 const {
   setupGooglePassportStrategy,
   initializePassport,
   initializePassportSession,
-} = require('./passport');
+} = require('./middleware/passport');
 
 const authRoutes = require('../routes/authRoutes');
 const fileRoutes = require('../routes/fileRoutes');

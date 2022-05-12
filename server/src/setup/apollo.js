@@ -30,4 +30,10 @@ const apolloServer = new ApolloServer({
   debug: false,
 });
 
-module.exports = apolloServer;
+async function startApolloServer(app) {
+  await apolloServer.start();
+
+  apolloServer.applyMiddleware({ app, path: '/graphql', cors: false });
+}
+
+module.exports = { startApolloServer };
